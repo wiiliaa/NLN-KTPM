@@ -7,6 +7,7 @@ import { StatusModule } from './status/status.module';
 import { FilesModule } from './files/files.module';
 import { DiscountsModule } from './discounts/discounts.module';
 import { TransportModule } from './transport/transport.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { TransportModule } from './transport/transport.module';
     FilesModule,
     DiscountsModule,
     TransportModule,
+    RolesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
