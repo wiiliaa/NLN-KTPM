@@ -678,6 +678,37 @@
   resolved "https://registry.npmjs.org/@lukeed/csprng/-/csprng-1.0.1.tgz"
   integrity sha512-uSvJdwQU5nK+Vdf6zxcWAY2A8r7uqe+gePwLWzJ+fsQehq18pc0I2hJKwypZ2aLM90+Er9u1xn4iLJPZ+xlL4g==
 
+"@napi-rs/pinyin-win32-x64-msvc@1.7.1":
+  version "1.7.1"
+  resolved "https://registry.npmjs.org/@napi-rs/pinyin-win32-x64-msvc/-/pinyin-win32-x64-msvc-1.7.1.tgz"
+  integrity sha512-W5hKb0AusXieCDot4O1SOTee1u46vKkHZ/vhdJqudzSubNmb6mQgMxSxPkfLMEvm+1hchOzrwVO0xCVtrLW1bw==
+
+"@napi-rs/pinyin@^1.5.0":
+  version "1.7.1"
+  resolved "https://registry.npmjs.org/@napi-rs/pinyin/-/pinyin-1.7.1.tgz"
+  integrity sha512-+Mutbfd28IPXFqK1MQIhzVn1riPuKPVDDfRvn1aN1o17xmWShE5orRr43UFdVVAsnagrgT9yvbXeAS7GwUYGZw==
+  dependencies:
+    "@napi-rs/triples" "^1.1.0"
+  optionalDependencies:
+    "@napi-rs/pinyin-android-arm-eabi" "1.7.1"
+    "@napi-rs/pinyin-android-arm64" "1.7.1"
+    "@napi-rs/pinyin-darwin-arm64" "1.7.1"
+    "@napi-rs/pinyin-darwin-x64" "1.7.1"
+    "@napi-rs/pinyin-freebsd-x64" "1.7.1"
+    "@napi-rs/pinyin-linux-arm-gnueabihf" "1.7.1"
+    "@napi-rs/pinyin-linux-arm64-gnu" "1.7.1"
+    "@napi-rs/pinyin-linux-arm64-musl" "1.7.1"
+    "@napi-rs/pinyin-linux-x64-gnu" "1.7.1"
+    "@napi-rs/pinyin-linux-x64-musl" "1.7.1"
+    "@napi-rs/pinyin-win32-arm64-msvc" "1.7.1"
+    "@napi-rs/pinyin-win32-ia32-msvc" "1.7.1"
+    "@napi-rs/pinyin-win32-x64-msvc" "1.7.1"
+
+"@napi-rs/triples@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/@napi-rs/triples/-/triples-1.1.0.tgz"
+  integrity sha512-XQr74QaLeMiqhStEhLn1im9EOMnkypp7MZOwQhGzqp2Weu5eQJbpPxWxixxlYRKWPOmJjsk6qYfYH9kq43yc2w==
+
 "@nestjs/cli@^9.0.0":
   version "9.2.0"
   resolved "https://registry.npmjs.org/@nestjs/cli/-/cli-9.2.0.tgz"
@@ -1623,6 +1654,11 @@ buffer@^6.0.3:
   dependencies:
     base64-js "^1.3.1"
     ieee754 "^1.2.1"
+
+bulk-replace@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.npmjs.org/bulk-replace/-/bulk-replace-0.0.1.tgz"
+  integrity sha512-IxLEnfsCYLjlpf6mG7SWpWgA4A8IAT5dAX3FxXHFn+6FTLf3ums771elQ74sj1BCOVanBf6esu0rEC6zgwfmIg==
 
 busboy@^1.0.0:
   version "1.6.0"
@@ -2734,6 +2770,13 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
+hepburn@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/hepburn/-/hepburn-1.2.0.tgz"
+  integrity sha512-xWjHb03dN/ivNcqG2vqA//sHQ0oapYGZ9QV/2TR7m2+cggxzoVpbDxZn9s/Zm1tF88/7a1IpdZyn00tNP5oABA==
+  dependencies:
+    bulk-replace "0.0.1"
+
 hexoid@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/hexoid/-/hexoid-1.0.0.tgz"
@@ -3456,6 +3499,15 @@ libphonenumber-js@^1.10.14:
   version "1.10.19"
   resolved "https://registry.npmjs.org/libphonenumber-js/-/libphonenumber-js-1.10.19.tgz"
   integrity sha512-MDZ1zLIkfSDZV5xBta3nuvbEOlsnKCPe4z5r3hyup/AXveevkl9A1eSWmLhd2FX4k7pJDe4MrLeQsux0HI/VWg==
+
+limax@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/limax/-/limax-3.0.0.tgz"
+  integrity sha512-7O14piibxAkJlQuAvhbJY5uubV7xszi1kQgnr5z+RkDJXyKYoStilqqpH8//LJq+HQpQN7TJmj3qxXzaEJOSfg==
+  dependencies:
+    "@napi-rs/pinyin" "^1.5.0"
+    hepburn "^1.2.0"
+    speakingurl "^14.0.1"
 
 lines-and-columns@^1.1.6:
   version "1.2.4"
@@ -4464,6 +4516,11 @@ sourcemap-codec@^1.4.8:
   version "1.4.8"
   resolved "https://registry.npmjs.org/sourcemap-codec/-/sourcemap-codec-1.4.8.tgz"
   integrity sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
+
+speakingurl@^14.0.1:
+  version "14.0.1"
+  resolved "https://registry.npmjs.org/speakingurl/-/speakingurl-14.0.1.tgz"
+  integrity sha512-1POYv7uv2gXoyGFpBCmpDVSNV74IfsWlDW216UPjbWufNf+bSU6GdbDsxdcxtfwb4xlI3yxzOTKClUosxARYrQ==
 
 split2@^4.1.0:
   version "4.1.0"

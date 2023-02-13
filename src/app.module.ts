@@ -8,6 +8,7 @@ import { FilesModule } from './files/files.module';
 import { DiscountsModule } from './discounts/discounts.module';
 import { TransportModule } from './transport/transport.module';
 import { RolesModule } from './roles/roles.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { RolesModule } from './roles/roles.module';
     DiscountsModule,
     TransportModule,
     RolesModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
