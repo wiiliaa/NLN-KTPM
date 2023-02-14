@@ -1,4 +1,9 @@
-import { Controller } from "@nestjs/common";
+import { Controller, Get } from '@nestjs/common';
 
-@Controller("files")
-export class FilesController {}
+@Controller('files')
+export class FilesController {
+  @Get('/')
+  async find() {
+    return 'hello';
+  }
+}
