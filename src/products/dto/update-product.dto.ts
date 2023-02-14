@@ -1,27 +1,27 @@
 import { IsOptional } from "class-validator";
 
-export class UpdateProductDto{
-    @IsOptional()
-    name: string;
+export class UpdateProductDto {
+  @IsOptional()
+  name: string;
 
-    @IsOptional()
-    slug: string;
+  @IsOptional()
+  slug: string;
 
-    @IsOptional()
-    price: number;
+  @IsOptional()
+  price: number;
 
-    @IsOptional()
-    length: number;
+  @IsOptional()
+  length: number;
 
-    @IsOptional()
-    weight: number;
+  @IsOptional()
+  weight: number;
 
-    @IsOptional()
-    width: number;
+  @IsOptional()
+  width: number;
 
-    @IsOptional()
-    height: number;
+  @IsOptional()
+  height: number;
 
-    @IsOptional()
-    description: string;
+  @IsOptional()
+  description: string;
 }

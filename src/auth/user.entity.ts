@@ -4,11 +4,10 @@ import {
   BeforeUpdate,
   Column,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Iframe } from 'src/iframes/iframes.entity';
+
 
 @Entity()
 export class User extends BaseEntity {
@@ -20,8 +19,7 @@ export class User extends BaseEntity {
 
   @Column()
   password: string;
-  @OneToMany(() => Iframe, (iframe) => iframe.user)
-  iframes: Iframe[];
+
 
   @BeforeInsert()
   @BeforeUpdate()

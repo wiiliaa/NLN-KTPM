@@ -1,9 +1,9 @@
 import { IsOptional } from "class-validator";
 
-export class UpdateMetaDto{
-    @IsOptional()
-    name: string
+export class UpdateMetaDto {
+  @IsOptional()
+  name: string;
 
-    @IsOptional()
-    value: string
+  @IsOptional()
+  value: string;
 }

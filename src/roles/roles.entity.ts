@@ -1,7 +1,15 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 
 @Entity()
-export class Role extends BaseEntity{
+export class Role extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,8 +28,11 @@ export class Role extends BaseEntity{
   @UpdateDateColumn({
     type: "timestamp",
     default: () => "CURRENT_TIMESTAMP(6)",
-    onUpdate: "CURRENT_TIMESTAMP(6)", 
+    onUpdate: "CURRENT_TIMESTAMP(6)",
   })
   public updated_at: Date;
+
+
+  
 
 }

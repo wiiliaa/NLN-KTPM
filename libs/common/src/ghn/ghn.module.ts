@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { GhnService } from './ghn.service';
+import { Module } from "@nestjs/common";
+import { GhnService } from "./ghn.service";
 
 @Module({
-  providers: [GhnService]
+  providers: [GhnService],
 })
 export class GhnModule {}

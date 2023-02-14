@@ -1,7 +1,6 @@
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import * as bcrypt from "bcrypt"
 import { Repository } from 'typeorm';
 import { AuthCredentials } from './dto/auth-credentials.dto';
 import { JwtPayload } from './jwt-payload.interface';

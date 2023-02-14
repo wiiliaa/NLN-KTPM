@@ -1,5 +1,5 @@
-export class CreateMetatDto{
-    name: string
-    
-    value: string
+export class CreateMetatDto {
+  name: string;
+
+  value: string;
 }

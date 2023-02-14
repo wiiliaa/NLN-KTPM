@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
-import { CommonService } from './common.service';
-import { GhnModule } from './ghn/ghn.module';
+import { Module } from "@nestjs/common";
+import { CommonService } from "./common.service";
+import { GhnModule } from "./ghn/ghn.module";
 
 @Module({
   providers: [CommonService],
