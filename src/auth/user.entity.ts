@@ -4,10 +4,10 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-
 
 @Entity()
 export class User extends BaseEntity {
@@ -20,9 +20,7 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-
   @BeforeInsert()
-  @BeforeUpdate()
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);
   }
