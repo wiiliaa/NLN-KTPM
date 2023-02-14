@@ -10,6 +10,7 @@ import { TransportModule } from './transport/transport.module';
 import { RolesModule } from './roles/roles.module';
 import { ProductsModule } from './products/products.module';
 import { ProductMetasModule } from './product_metas/product_metas.module';
+import { ProductCategoriesModule } from './product_categories/product_categories.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ProductMetasModule } from './product_metas/product_metas.module';
     RolesModule,
     ProductsModule,
     ProductMetasModule,
+    ProductCategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
