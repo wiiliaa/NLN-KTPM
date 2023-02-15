@@ -11,6 +11,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { Order } from 'src/orders/order.entity';
 import { PaymentOrder } from 'src/payment_orders/payment_orders.entity';
+import { Role } from 'src/roles/roles.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -28,10 +29,10 @@ export class User extends BaseEntity {
 
   @Column()
   birthday: Date;
-  
+
   @Column()
   email: string;
-  
+
   @Column()
   address: string;
 
@@ -47,11 +48,14 @@ export class User extends BaseEntity {
   @Column()
   ward_name: string;
 
-  @OneToMany(() => Order, (order)=>order.user)
-  orders:Order[];
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[];
 
   @OneToOne(() => PaymentOrder, (paymentOrder) => paymentOrder.user)
   paymentOrder: PaymentOrder;
+
+  @OneToOne(() => Role)
+  role: Role;
 
   @BeforeInsert()
   async hashPassword() {
