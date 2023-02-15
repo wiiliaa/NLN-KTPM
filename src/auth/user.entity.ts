@@ -8,9 +8,9 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Order } from '@src/orders/order.entity';
-import { PaymentOrder } from '@src/payment_orders/payment_orders.entity';
-import { Role } from '@src/roles/roles.entity';
+import { Order } from 'src/orders/order.entity';
+import { PaymentOrder } from 'src/payment_orders/payment_orders.entity';
+import { Role } from 'src/roles/roles.entity';
 
 @Entity()
 export class User extends BaseEntity {
