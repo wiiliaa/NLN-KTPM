@@ -3,11 +3,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from 'src/auth/user.entity';
+import { OrderDetail } from '@src/order_details/order_details.entity';
 
 @Entity()
 export class Discount extends BaseEntity {
@@ -34,6 +37,9 @@ export class Discount extends BaseEntity {
 
   @OneToOne(() => User)
   user: User;
+
+  @OneToMany(()=>OrderDetail,(orderdetail)=>orderdetail)
+  orderDetails:OrderDetail[];
 
   @CreateDateColumn({
     type: 'timestamp',

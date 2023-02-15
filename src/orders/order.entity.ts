@@ -31,12 +31,11 @@ export class Order extends BaseEntity {
     @ManyToOne(() => Payment, (payment) => payment.orders)
     payment: Payment;
 
-    
     @ManyToOne(() => User, (user) => user.orders)
     user: User;
 
     @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.orders)
-    Order_details: OrderDetail[];
+    orderDetails: OrderDetail[];
 
     @CreateDateColumn({
         type: "timestamp",
