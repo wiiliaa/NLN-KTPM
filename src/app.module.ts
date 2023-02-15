@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 import { typeOrmConfig } from './config/TypeOrm.config';
 import { DiscountsModule } from './discounts/discounts.module';
 import { FilesModule } from './files/files.module';
@@ -21,6 +22,7 @@ import { TransportsModule } from './transports/transports.module';
     RolesModule,
     DiscountsModule,
     TransportsModule,
+    AuthModule,
   ],
 })
 export class AppModule { }

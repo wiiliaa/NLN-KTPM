@@ -62,6 +62,13 @@
     "typescript": "^4.7.4"
   },
   "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleNameMapper": {
+      "src/(.*)": "/Users/thienthao123/projects/nestjs/nhom10_backend/src/$1"
+    },
     "moduleFileExtensions": [
       "js",
       "json",

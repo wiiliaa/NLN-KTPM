@@ -22,7 +22,7 @@ export class User extends BaseEntity {
 
   @Column()
   password: string;
-
+  /*
   @Column()
   fullname: string;
 
@@ -46,6 +46,7 @@ export class User extends BaseEntity {
 
   @Column()
   ward_name: string;
+  */
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
@@ -55,7 +56,6 @@ export class User extends BaseEntity {
 
   @OneToOne(() => Role)
   role: Role;
-
   @BeforeInsert()
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);
