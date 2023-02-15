@@ -2,9 +2,7 @@ import {
   Body,
   Controller,
   Get,
-  Logger,
   Post,
-  Req,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -16,8 +14,7 @@ import { User } from './user.entity';
 
 @Controller('auth')
 export class AuthController {
-  private logger = new Logger('AuthController');
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @Post('/login')
   async login(@Body() authCredentials: AuthCredentials) {
