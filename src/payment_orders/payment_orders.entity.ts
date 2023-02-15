@@ -31,9 +31,6 @@ export class PaymentOrder extends BaseEntity {
   @ManyToOne(() => Payment, (payment) => payment.paymentOrder)
   payment: Payment;
 
-  @OneToOne((type) => Order)
-  @JoinColumn()
-  order: Order;
 
   @ManyToOne(() => User, (user) => user.paymentOrder)
   user: User;
@@ -41,10 +38,6 @@ export class PaymentOrder extends BaseEntity {
 
   @OneToOne(()=>Status)
   status:Status;
-
-  
-  // @ManyToOne(()=>Status,(status)=>status.paymentOrders)
-  // status:Status;
 
 
   @CreateDateColumn({
