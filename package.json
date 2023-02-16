@@ -7,7 +7,6 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-  
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -49,9 +48,7 @@
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.0.1",
-    
     "jest": "29.3.1",
-    
     "source-map-support": "^0.5.20",
     "supertest": "^6.3.3",
     "ts-jest": "29.0.3",
@@ -66,7 +63,7 @@
       "src"
     ],
     "moduleNameMapper": {
-      "src/(.*)": "/Users/thienthao123/projects/nestjs/nhom10_backend/src/$1"
+      "src/(.*)": "<rootDir>/src/$1"
     },
     "moduleFileExtensions": [
       "js",

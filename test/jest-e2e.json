@@ -15,6 +15,6 @@
     "src"
   ],
   "moduleNameMapper": {
-    "src/(.*)": "/Users/thienthao123/projects/nestjs/nhom10_backend/src/$1"
+    "src/(.*)": "<rootDir>/../src/$1"
   }
 }
