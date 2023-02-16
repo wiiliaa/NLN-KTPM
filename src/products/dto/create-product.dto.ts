@@ -1,6 +1,5 @@
 export class CreateProductDto {
   name: string;
-  slug: string;
   price: number;
   length: number;
   weight: number;

@@ -5,9 +5,6 @@ export class UpdateProductDto {
   name: string;
 
   @IsOptional()
-  slug: string;
-
-  @IsOptional()
   price: number;
 
   @IsOptional()
