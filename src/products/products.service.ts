@@ -1,16 +1,16 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Product } from "./products.entity";
-import { Repository } from "typeorm";
-import { CreateProductDto } from "./dto/create-product.dto";
-import { UpdateProductDto } from "./dto/update-product.dto";
-import Slug from "limax";
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Product } from './products.entity';
+import { Repository } from 'typeorm';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import Slug from 'limax';
 
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectRepository(Product) private productRepository: Repository<Product>
-  ) {}
+    @InjectRepository(Product) private productRepository: Repository<Product>,
+  ) { }
 
   find() {
     return this.productRepository.find();
@@ -26,8 +26,8 @@ export class ProductsService {
 
   async findByName(name: string) {
     const found = await this.productRepository
-      .createQueryBuilder("Product")
-      .where("Product.name like :name", { name: `%${name}%` })
+      .createQueryBuilder('Product')
+      .where('Product.name like :name', { name: `%${name}%` })
       .getMany();
 
     if (!found) {

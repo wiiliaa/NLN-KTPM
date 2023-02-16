@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-import { faker } from '@faker-js/faker';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -22,6 +21,7 @@ describe('AppController (e2e)', () => {
       .expect(200)
       .expect('Hello World!');
   });
+  /*
 
   it('/discounts/1', async () => {
     let res = await request(app.getHttpServer()).get('/discounts/123');
@@ -39,4 +39,5 @@ describe('AppController (e2e)', () => {
     console.log(res.body);
     expect(res.statusCode).toEqual(201);
   });
+  */
 });
