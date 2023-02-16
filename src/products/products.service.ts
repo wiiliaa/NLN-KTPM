@@ -4,12 +4,15 @@ import { Product } from './products.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+
 import Slug from 'limax';
+import slugify from 'slugify';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product) private productRepository: Repository<Product>,
+ 
   ) { }
 
   find() {
@@ -38,7 +41,7 @@ export class ProductsService {
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const { name, price, weight, description } = createProductDto;
-    const slug = Slug(name);
+    const slug =  slugify(name);
     const product = new Product();
 
     product.name = name;
@@ -55,7 +58,7 @@ export class ProductsService {
   async update(id: number, updateProductDto: UpdateProductDto) {
     const { name, price, weight, description } = updateProductDto;
     const product = await this.findById(id);
-    const slug = Slug(name);
+    const slug = slugify(name);
 
     if (name) {
       product.name = name;
