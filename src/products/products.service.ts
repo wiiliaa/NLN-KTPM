@@ -42,6 +42,7 @@ export class ProductsService {
     const product = new Product();
 
     product.name = name;
+    product.slug = slug;
     product.price = price;
     product.weight = weight;
     product.description = description;

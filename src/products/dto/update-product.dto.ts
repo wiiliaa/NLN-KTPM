@@ -8,9 +8,6 @@ export class UpdateProductDto {
   price: number;
 
   @IsOptional()
-  length: number;
-
-  @IsOptional()
   weight: number;
 
   @IsOptional()

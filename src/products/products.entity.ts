@@ -41,8 +41,6 @@ export class Product extends BaseEntity {
   @Column({ default: 0 })
   height: number;
 
-  @Column({ default: 0 })
-  length: number;
 
   @Column()
   description: string;
