@@ -1,9 +1,11 @@
+/* eslint-disable prettier/prettier */
+import { User } from "@src/auth/user.entity";
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -33,6 +35,7 @@ export class Role extends BaseEntity {
   public updated_at: Date;
 
 
-  
+  @OneToMany(()=> User, user=>user.roles)
+  user: User[];
 
 }

@@ -1,11 +1,19 @@
+/* eslint-disable prettier/prettier */
 import { Comment } from '@src/comments/comments.entity';
+import { Discount } from '@src/discounts/discounts.entity';
+import { File } from '@src/files/files.entity';
+import { ProductCategory } from '@src/product_categories/product_categories.entity';
+import { ProductMeta } from '@src/product_metas/product-metas.entity';
+import { Status } from '@src/status/status.entity';
 import { OrderDetail } from 'src/order_details/order_details.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -44,6 +52,21 @@ export class Product extends BaseEntity {
 
   @OneToMany(() => Comment, (comment) => comment.product)
   comments: Comment[];
+
+  @OneToMany(()=> Discount,(discount)=> discount.product)
+  discount: Discount[]; 
+
+  @OneToMany(()=>File, (file)=> file.product)
+  files: File[];
+
+  @ManyToOne(()=>ProductCategory,(productcategory)=> productcategory.product)
+  productcategory: ProductCategory;
+
+  @OneToMany(()=>ProductMeta,(productmeta)=>productmeta.product)
+  productmeta: ProductMeta[];
+
+  @OneToOne(()=>Status,(status)=>status.product)
+  status: Status;
 
   @CreateDateColumn({
     type: 'timestamp',

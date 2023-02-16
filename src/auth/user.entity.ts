@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   BaseEntity,
   BeforeInsert,
@@ -47,6 +48,9 @@ export class User extends BaseEntity {
   @Column()
   ward_name: string;
   */
+
+  @OneToOne(()=> Role, role=> role.user)
+  roles: Role;
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];

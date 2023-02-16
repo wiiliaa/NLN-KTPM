@@ -1,8 +1,11 @@
+/* eslint-disable prettier/prettier */
+import { Product } from "@src/products/products.entity";
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -20,6 +23,10 @@ export class ProductCategory extends BaseEntity {
 
   @Column()
   description: string;
+
+  @OneToOne(()=>Product,(product)=>product.productcategory)
+  product: Product;
+
 
   @CreateDateColumn({
     type: "timestamp",

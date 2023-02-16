@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+/* eslint-disable prettier/prettier */
+import { Product } from "@src/products/products.entity";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class ProductMeta extends BaseEntity {
@@ -10,4 +12,20 @@ export class ProductMeta extends BaseEntity {
 
   @Column()
   value: string;
+
+  @ManyToOne(()=>Product,(product)=>product.productmeta)
+  product: Product;
+  
+  @CreateDateColumn({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP(6)",
+  })
+  public created_at: Date;
+
+  @UpdateDateColumn({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    onUpdate: "CURRENT_TIMESTAMP(6)",
+  })
+  public updated_at: Date;
 }

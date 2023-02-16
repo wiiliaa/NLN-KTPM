@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   BaseEntity,
   Column,
@@ -11,6 +12,7 @@ import {
 } from 'typeorm';
 import { User } from 'src/auth/user.entity';
 import { OrderDetail } from '@src/order_details/order_details.entity';
+import { Product } from '@src/products/products.entity';
 
 @Entity()
 export class Discount extends BaseEntity {
@@ -40,6 +42,9 @@ export class Discount extends BaseEntity {
 
   @OneToMany(()=>OrderDetail,(orderdetail)=>orderdetail)
   orderDetails:OrderDetail[];
+
+  @ManyToOne(()=> Product,(product)=> product.discount)
+  product: Product;
 
   @CreateDateColumn({
     type: 'timestamp',

@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+import { Product } from '@src/products/products.entity';
 import { User } from 'src/auth/user.entity';
 import { PaymentOrder } from 'src/payment_orders/payment_orders.entity';
 import {
@@ -32,6 +34,9 @@ export class Status extends BaseEntity {
 
     @OneToMany(() => PaymentOrder, (paymentorder) => paymentorder.status)
     paymentOrders: PaymentOrder[];
+
+    @OneToMany(()=>Product,(product)=>product.status)
+    product: Product[];
 
     @CreateDateColumn({
         type: 'timestamp',
