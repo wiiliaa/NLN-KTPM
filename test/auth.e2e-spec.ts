@@ -28,12 +28,54 @@ describe('AuthController (e2e)', () => {
     expect(res.body).toHaveProperty('id');
   });
 
-  it('should be login', async () => {
+  it('should be login corrent', async () => {
     let body = { username: 'Mittie99', password: 'yYqFA0wl432dStu' };
-
     let res = await request(app.getHttpServer()).post('/auth/login').send(body);
-    console.log(res.body);
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty('token');
+    expect(res.statusCode).toEqual(201);
+    expect(res.body).toHaveProperty('accessToken');
+  });
+
+  it('should valid login wrong username', async () => {
+    let body = { username: 'Mittie99_woring', password: 'yYqFA0wl432dStu' };
+    let res = await request(app.getHttpServer()).post('/auth/login').send(body);
+    expect(res.statusCode).toEqual(401);
+  });
+
+  it('should valid login wrong password', async () => {
+    let body = { username: 'Mittie99', password: 'yYqFA0wl432dStu_wrong' };
+    let res = await request(app.getHttpServer()).post('/auth/login').send(body);
+    expect(res.statusCode).toEqual(401);
+  });
+
+  it('should valid login wrong username & password', async () => {
+    let body = { username: 'Mittie99', password: 'yYqFA0wl432dStu_wrong' };
+    let res = await request(app.getHttpServer()).post('/auth/login').send(body);
+    expect(res.statusCode).toEqual(401);
+  });
+
+  it('should be faild authorizated', async () => {
+    const accessToken = '12123123';
+    const resLogined = await request(app.getHttpServer())
+      .get('/auth/user')
+      .set({ Authorization: `Bearer ${accessToken}` });
+    expect(resLogined.statusCode).toEqual(401);
+  });
+
+  it('should be failed authorization', async () => {
+    const body = { username: 'Mittie99', password: 'yYqFA0wl432dStu' };
+    const res = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send(body);
+    const { accessToken } = res.body;
+    expect(res.statusCode).toEqual(201);
+    expect(res.body).toHaveProperty('accessToken');
+
+    const resLogined = await request(app.getHttpServer())
+      .get('/auth/user')
+      .set({ Authorization: `Bearer ${accessToken}` });
+    const { user } = resLogined.body;
+    expect(resLogined.statusCode).toEqual(200);
+    expect(user).toHaveProperty('id');
+    expect(user.username).toEqual(body.username);
   });
 });
