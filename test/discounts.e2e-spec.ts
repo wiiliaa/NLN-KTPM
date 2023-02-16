@@ -5,7 +5,7 @@ import { AppModule } from './../src/app.module';
 import { faker } from '@faker-js/faker';
 import { CreateDiscountDto } from '@src/discounts/dto/create-discount.dto';
 
-describe('AppController (e2e)', () => {
+describe('DiscountsController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
