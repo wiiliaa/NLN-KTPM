@@ -1,0 +1,22 @@
+Product
+  name
+  slug
+  sku = slug
+  url_key = slug
+  hash_variant: true
+  categoris (relation table product-cagory)
+  price // 32$
+  props: {
+    available_qty: 30,
+    country_of_origin: null,
+    extra: null,
+    size: { weight: 0.1 }
+  }
+  default_category: { category_id: 103, title: 'iPhone 7', url_key: 'iphone-7' } = categoris[0]
+  images (relation)
+  sort_price = price
+  sort_in_stock
+  in_stock
+
+
+
