@@ -61,8 +61,13 @@ describe('AuthController (e2e)', () => {
     expect(resLogined.statusCode).toEqual(401);
   });
 
+
   it('should be correct authorization', async () => {
     const body = { username: 'Felicia.Hoppe63', password: 'uErqi5IeYaAg0XR' };
+
+  it('should be corrent authorization', async () => {
+    const body = { username: 'Mittie99', password: 'yYqFA0wl432dStu' };
+
     const res = await request(app.getHttpServer())
       .post('/auth/login')
       .send(body);
@@ -77,5 +82,6 @@ describe('AuthController (e2e)', () => {
     expect(resLogined.statusCode).toEqual(200);
     expect(user).toHaveProperty('id');
     expect(user.username).toEqual(body.username);
+  })
   });
-});
+})
