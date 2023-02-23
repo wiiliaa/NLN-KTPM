@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { Body, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { faker } from '@faker-js/faker';
@@ -16,6 +16,7 @@ describe('AuthController (e2e)', () => {
     await app.init();
   });
 
+
   it('should be sign up', async () => {
     let username = faker.internet.userName();
     let password = faker.internet.password();
@@ -29,8 +30,7 @@ describe('AuthController (e2e)', () => {
   });
 
   it('should be login correct', async () => {
-    let body = { username: 'Felicia.Hoppe63', password: 'uErqi5IeYaAg0XR' };
-    let res = await request(app.getHttpServer()).post('/auth/login').send(body);
+    let res = await request(app.getHttpServer()).post('/auth/login').send(Body);
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty('accessToken');
   });
