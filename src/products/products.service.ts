@@ -12,7 +12,6 @@ import slugify from 'slugify';
 export class ProductsService {
   constructor(
     @InjectRepository(Product) private productRepository: Repository<Product>,
- 
   ) { }
 
   find() {
@@ -20,7 +19,10 @@ export class ProductsService {
   }
 
   async findById(id: number) {
-    const found = await this.productRepository.findOne({ where: { id } });
+    const found = await this.productRepository.findOne({
+      where: { id },
+      relations: { comments: true },
+    });
     if (!found) {
       throw new InternalServerErrorException(`Product:${id} non-exist`);
     }
@@ -41,7 +43,7 @@ export class ProductsService {
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const { name, price, weight, description } = createProductDto;
-    const slug =  slugify(name);
+    const slug = slugify(name);
     const product = new Product();
 
     product.name = name;
