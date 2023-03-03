@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Body, INestApplication } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { faker } from '@faker-js/faker';
@@ -16,11 +16,10 @@ describe('AuthController (e2e)', () => {
     await app.init();
   });
 
-
   it('should be sign up', async () => {
     let username = faker.internet.userName();
     let password = faker.internet.password();
-    // console.log('test sign up:', { username, password });
+    console.log('test sign up:', { username, password });
 
     let res = await request(app.getHttpServer())
       .post('/auth/signup')
@@ -29,8 +28,9 @@ describe('AuthController (e2e)', () => {
     expect(res.body).toHaveProperty('id');
   });
 
-  it('should be login correct', async () => {
-    let res = await request(app.getHttpServer()).post('/auth/login').send(Body);
+  it('should be login corrent', async () => {
+    let body = { username: 'Mittie99', password: 'yYqFA0wl432dStu' };
+    let res = await request(app.getHttpServer()).post('/auth/login').send(body);
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty('accessToken');
   });
@@ -42,7 +42,7 @@ describe('AuthController (e2e)', () => {
   });
 
   it('should valid login wrong password', async () => {
-    let body = { username: 'Mittie9', password: 'yYqFA0wl432dStu_wrong' };
+    let body = { username: 'Mittie99', password: 'yYqFA0wl432dStu_wrong' };
     let res = await request(app.getHttpServer()).post('/auth/login').send(body);
     expect(res.statusCode).toEqual(401);
   });
@@ -61,13 +61,8 @@ describe('AuthController (e2e)', () => {
     expect(resLogined.statusCode).toEqual(401);
   });
 
-
-  it('should be correct authorization', async () => {
-    const body = { username: 'Felicia.Hoppe63', password: 'uErqi5IeYaAg0XR' };
-
-  it('should be corrent authorization', async () => {
+  it('should be failed authorization', async () => {
     const body = { username: 'Mittie99', password: 'yYqFA0wl432dStu' };
-
     const res = await request(app.getHttpServer())
       .post('/auth/login')
       .send(body);
@@ -82,6 +77,5 @@ describe('AuthController (e2e)', () => {
     expect(resLogined.statusCode).toEqual(200);
     expect(user).toHaveProperty('id');
     expect(user.username).toEqual(body.username);
-  })
   });
-})
+});

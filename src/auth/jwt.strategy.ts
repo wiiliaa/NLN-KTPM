@@ -7,7 +7,7 @@ import { JwtPayload } from "./jwt-payload.interface";
 import { User } from "./user.entity";
 
 
-
+//ExtractJwt.fromAuthHeaderAsBearerToken
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
 

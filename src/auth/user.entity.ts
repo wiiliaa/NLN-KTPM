@@ -12,7 +12,6 @@ import * as bcrypt from 'bcrypt';
 import { Order } from 'src/orders/order.entity';
 import { PaymentOrder } from 'src/payment_orders/payment_orders.entity';
 import { Role } from 'src/roles/roles.entity';
-import { Discount } from '@src/discounts/discounts.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -59,12 +58,8 @@ export class User extends BaseEntity {
   @OneToOne(() => PaymentOrder, (paymentOrder) => paymentOrder.user)
   paymentOrder: PaymentOrder;
 
-  @OneToOne(() => Role, (role)=> role.user)
+  @OneToOne(() => Role)
   role: Role;
-
-  @OneToMany(()=> Discount, (discount)=> discount.user)
-  discount: Discount[];
-
   @BeforeInsert()
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);

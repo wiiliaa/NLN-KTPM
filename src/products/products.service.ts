@@ -4,6 +4,8 @@ import { Product } from './products.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+
+import Slug from 'limax';
 import slugify from 'slugify';
 
 @Injectable()
@@ -17,10 +19,7 @@ export class ProductsService {
   }
 
   async findById(id: number) {
-    const found = await this.productRepository.findOne({
-      where: { id },
-      relations: { comments: true },
-    });
+    const found = await this.productRepository.findOne({ where: { id } });
     if (!found) {
       throw new InternalServerErrorException(`Product:${id} non-exist`);
     }
@@ -61,7 +60,6 @@ export class ProductsService {
     const slug = slugify(name);
 
     if (name) {
-      
       product.name = name;
       product.slug = slug;
     }

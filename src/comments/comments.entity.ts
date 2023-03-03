@@ -1,6 +1,6 @@
-import { User } from 'src/auth/user.entity';
-import { Product } from 'src/products/products.entity';
-import { Status } from 'src/status/status.entity';
+import { User } from "src/auth/user.entity";
+import { Product } from "src/products/products.entity";
+import { Status } from "src/status/status.entity";
 import {
   BaseEntity,
   Column,
@@ -10,7 +10,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from "typeorm";
 
 @Entity()
 export class Comment extends BaseEntity {
@@ -27,21 +27,24 @@ export class Comment extends BaseEntity {
   user: User;
 
   @OneToOne(() => Status)
-  status: Status;
 
+  // @OneToOne(() => Status, (status)=>status.comments)
+  // status: Status;
   @ManyToOne(() => Product, (product) => product.comments)
   product: Product;
 
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP(6)",
   })
   public created_at: Date;
 
+  //
+
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    onUpdate: "CURRENT_TIMESTAMP(6)",
   })
   public updated_at: Date;
 }

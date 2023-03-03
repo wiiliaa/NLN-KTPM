@@ -37,13 +37,13 @@ export class Discount extends BaseEntity {
   @Column()
   note: string;
 
-  @OneToOne(() => User, (user)=> user.discount)
+  @OneToOne(() => User)
   user: User;
 
-  @OneToMany(() => OrderDetail, (orderdetail) => orderdetail)
-  orderDetails: OrderDetail[];
+  @OneToMany(()=>OrderDetail,(orderdetail)=>orderdetail)
+  orderDetails:OrderDetail[];
 
-  @ManyToOne(() => Product, (product) => product.discount)
+  @ManyToOne(()=> Product,(product)=> product.discount)
   product: Product;
 
   @CreateDateColumn({

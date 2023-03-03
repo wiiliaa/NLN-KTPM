@@ -41,6 +41,8 @@ export class Product extends BaseEntity {
   @Column({ default: 0 })
   height: number;
 
+  @Column({ nullable: true })
+  image: string;
 
   @Column()
   description: string;
@@ -51,19 +53,22 @@ export class Product extends BaseEntity {
   @OneToMany(() => Comment, (comment) => comment.product)
   comments: Comment[];
 
-  @OneToMany(()=> Discount,(discount)=> discount.product)
-  discount: Discount[]; 
+  @OneToMany(() => Discount, (discount) => discount.product)
+  discount: Discount[];
 
-  @OneToMany(()=>File, (file)=> file.product)
+  @OneToMany(() => File, (file) => file.product)
   files: File[];
 
-  @ManyToOne(()=>ProductCategory,(productcategory)=> productcategory.product)
+  @ManyToOne(
+    () => ProductCategory,
+    (productcategory) => productcategory.product,
+  )
   productcategory: ProductCategory;
 
-  @OneToMany(()=>ProductMeta,(productmeta)=>productmeta.product)
+  @OneToMany(() => ProductMeta, (productmeta) => productmeta.product)
   productmeta: ProductMeta[];
 
-  @OneToOne(()=>Status,(status)=>status.product)
+  @OneToOne(() => Status, (status) => status.product)
   status: Status;
 
   @CreateDateColumn({
