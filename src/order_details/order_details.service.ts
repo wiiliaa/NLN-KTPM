@@ -20,13 +20,13 @@ export class OrderDetailsService {
         }
         return found;
     }
-    async findByOrder(order: FindOptionsWhere<Order>){
-      const found = await this.orderDetailRepository.find({ where: { order: order } });
-        if (!found) {
-          throw new InternalServerErrorException(`Files:${order} non exist`);
-        }
-        return found;
-    }
+    // async findByOrder(order: FindOptionsWhere<Order>){
+    //   const found = await this.orderDetailRepository.find({ where: { order: order } });
+    //     if (!found) {
+    //       throw new InternalServerErrorException(`Files:${order} non exist`);
+    //     }
+    //     return found;
+    // }
     async create(createOrderDto: CreateOrderDetailDto) {
         const { note } = createOrderDto;
         const orderDetail = new OrderDetail();
