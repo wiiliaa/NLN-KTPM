@@ -31,6 +31,8 @@ export class PaymentOrder extends BaseEntity {
   @ManyToOne(() => Payment, (payment) => payment.paymentOrder)
   payment: Payment;
 
+  @OneToOne(()=>Order)
+  order:Order;
 
   @ManyToOne(() => User, (user) => user.paymentOrder)
   user: User;

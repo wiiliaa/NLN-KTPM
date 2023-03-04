@@ -7,6 +7,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -18,10 +19,7 @@ export class OrderDetail extends BaseEntity {
   id: number;
 
   @Column()
-  price: string;
-
-  @Column()
-  date: Date;
+  const: number;
 
   @Column()
   note: string;
@@ -30,7 +28,8 @@ export class OrderDetail extends BaseEntity {
   product: Product;
 
   @OneToOne(() => Order)
-  orders: Order[];
+  @JoinColumn()
+  order: Order;
 
   @OneToOne(() => Discount)
   discount: Discount;

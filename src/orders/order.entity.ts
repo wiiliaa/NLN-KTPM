@@ -7,7 +7,6 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     ManyToOne,
-    JoinColumn,
     PrimaryGeneratedColumn,
 } from "typeorm";
 import { OrderDetail } from "src/order_details/order_details.entity";
@@ -27,6 +26,8 @@ export class Order extends BaseEntity {
     @Column()
     note: string;
 
+    @OneToOne(()=>PaymentOrder)
+    paymentOrder:PaymentOrder;
 
     @ManyToOne(() => Payment, (payment) => payment.orders)
     payment: Payment;
@@ -34,7 +35,7 @@ export class Order extends BaseEntity {
     @ManyToOne(() => User, (user) => user.orders)
     user: User;
 
-    @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.orders)
+    @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.order)
     orderDetails: OrderDetail[];
 
     @CreateDateColumn({

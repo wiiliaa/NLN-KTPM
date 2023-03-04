@@ -6,6 +6,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 @Injectable()
 export class OrdersService {
+
     constructor(
         @InjectRepository(Order) private orderRepository: Repository<Order>,
     ) { }
@@ -19,8 +20,7 @@ export class OrdersService {
         }
         return found;
     }
-
-    async findByProduct(productId: number) { }
+    // async findByProduct(productId: number) { }
     async create(createOrderDto: CreateOrderDto) {
         const { note, ordercode } = createOrderDto;
         const order = new Order();

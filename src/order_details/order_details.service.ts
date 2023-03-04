@@ -1,7 +1,8 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { FindOptionsWhere, Repository } from "typeorm";
 import { OrderDetail } from "./order_details.entity";
+import { Order } from '@src/orders/order.entity';
 import { CreateOrderDetailDto } from "./dto/create-order_detail.dto";
 import { UpdateOrderDetailDto } from "./dto/update-order_detail.dto";
 @Injectable()
@@ -19,23 +20,22 @@ export class OrderDetailsService {
         }
         return found;
     }
+    async findByOrder(order: FindOptionsWhere<Order>){
+      const found = await this.orderDetailRepository.find({ where: { order: order } });
+        if (!found) {
+          throw new InternalServerErrorException(`Files:${order} non exist`);
+        }
+        return found;
+    }
     async create(createOrderDto: CreateOrderDetailDto) {
-        const { price, date, note } = createOrderDto;
+        const { note } = createOrderDto;
         const orderDetail = new OrderDetail();
-        orderDetail.price = price;
-        orderDetail.date = date;
         orderDetail.note = note;
         return await orderDetail.save();
     }
     async update(id: number, updateOrderDto: UpdateOrderDetailDto) {
-        const { price,  date, note } = updateOrderDto;
+        const { note } = updateOrderDto;
         let orderDetail = await this.findOne(id);
-        if (price) {
-            orderDetail.price = price;        
-        }
-        if (date) {
-            orderDetail.date = date;        
-        }
         if (note) {
             orderDetail.note = note;        
         }

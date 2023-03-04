@@ -11,6 +11,7 @@ import { ProductsModule } from './products/products.module';
 import { ProductMetasModule } from './product_metas/product_metas.module';
 import { RolesModule } from './roles/roles.module';
 import { TransportsModule } from './transports/transports.module';
+import { OrdersModule } from './orders/orders.module';
 
 
 @Module({
@@ -26,6 +27,7 @@ import { TransportsModule } from './transports/transports.module';
     TransportsModule,
     AuthModule,
     CommentsModule,
+    OrdersModule
   ],
 })
 export class AppModule { }
