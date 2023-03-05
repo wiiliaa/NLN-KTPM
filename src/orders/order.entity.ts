@@ -44,7 +44,10 @@ export class Order extends BaseEntity {
     })
     payment: Payment;
 
-    @ManyToOne(() => User, (user) => user.orders)
+    @ManyToOne(() => User, (user) => user.orders, {
+        eager: true,
+        cascade: true,
+    })
     user: User;
 
     @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.order, {

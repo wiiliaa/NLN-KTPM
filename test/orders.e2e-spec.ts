@@ -16,7 +16,9 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/orders (POST)', () => {
+  it('/orders (POST)', async () => {
+    const accessToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRoaWVudGhhbyIsImlhdCI6MTY3Nzk5MjYzNiwiZXhwIjoxNjc3OTk2MjM2fQ.YuGJGbv7drGA11wVwDHkNyHHY7r4ornFJYe6SaHG6fA';
     let createOrderDto = {
       ordercode: faker.random.numeric(2),
       note: faker.random.words(),
@@ -29,22 +31,23 @@ describe('AppController (e2e)', () => {
       },
       orderDetails: [
         {
-          qty: 2,
-          product: {
-            id: 1,
-          },
+          qty: 231,
+          product: 1,
         },
         {
           qty: 2,
-          product: {
-            id: 2,
-          },
+          product: 2,
+        },
+        {
+          qty: 512,
+          product: 4,
         },
       ],
     };
-    return request(app.getHttpServer())
+    const res = await request(app.getHttpServer())
       .post('/orders')
       .send(createOrderDto)
-      .expect(201);
+      .set({ Authorization: `Bearer ${accessToken}` });
+    expect(res.status).toEqual(201);
   });
 });

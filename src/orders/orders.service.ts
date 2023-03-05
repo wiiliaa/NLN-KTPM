@@ -1,13 +1,20 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from './order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { User } from '@src/auth/user.entity';
+import { OrderDetailsService } from '@src/order_details/order_details.service';
 @Injectable()
 export class OrdersService {
     constructor(
         @InjectRepository(Order) private orderRepository: Repository<Order>,
+        private orderDetailService: OrderDetailsService,
     ) { }
 
     find() {
@@ -26,20 +33,34 @@ export class OrdersService {
         return await order.remove();
     }
 
-    async create(createOrderDto: CreateOrderDto) {
-        const { note, ordercode, tax, payment, discount } = createOrderDto;
+    async create(createOrderDto: CreateOrderDto, user: User) {
+        const { note, ordercode, tax, payment, discount, orderDetails } =
+            createOrderDto;
         const order = new Order();
+        order.orderDetails = [];
+        if (orderDetails.length == 0) {
+            throw new BadRequestException('Order Details is empty');
+        }
+
         order.note = note;
         order.ordercode = ordercode;
         order.tax = tax;
         order.discount = discount;
         order.payment = payment;
+        order.user = user;
+        order.orderDetails = orderDetails;
+        await order.save();
+
         const result = await order.save();
         return this.responseOrderWithCal(result);
     }
 
     responseOrderWithCal(order: Order) {
         const calOrderTotal = this.calORderTotal(order);
+        if (!order.total && order.orderDetails) {
+            order.total = calOrderTotal.totalAfter;
+            order.save();
+        }
         return {
             ...calOrderTotal,
             ...order,
@@ -48,15 +69,19 @@ export class OrdersService {
 
     calORderTotal(order: Order) {
         let total = 0;
+        if (!order.orderDetails)
+            return { total, totalDiscount: 0, totalTax: 0, totalAfter: 0 };
         order.orderDetails.forEach((orderDetail) => {
             total += orderDetail.qty * orderDetail.product.price;
         });
         const totalDiscount = +(total * (order.discount.percent / 100)).toFixed(2);
         const totalTax = +(totalDiscount * (order.tax / 100)).toFixed(2);
+        const totalAfter = +(total - totalDiscount + totalTax).toFixed(2);
         return {
             total,
             totalDiscount,
             totalTax,
+            totalAfter,
         };
     }
     async update(id: number, updateOrderDto: UpdateOrderDto) {

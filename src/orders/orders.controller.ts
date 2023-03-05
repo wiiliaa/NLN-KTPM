@@ -6,7 +6,11 @@ import {
   Body,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from '@src/auth/get-user.decorator';
+import { User } from '@src/auth/user.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrdersService } from './orders.service';
@@ -20,18 +24,14 @@ export class OrdersController {
   }
   @Get('/:id')
   async findOne(@Param('id') id: number) {
-    return this.ordersService.findOne(id);
-  }
-
-  @Get('/total/:id')
-  async calORderTotal(@Param('id') id: number) {
-    const order = await this.findOne(id);
-    return this.ordersService.calORderTotal(order);
+    const order = await this.ordersService.findOne(id);
+    return this.ordersService.responseOrderWithCal(order);
   }
 
   @Post()
-  async create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
+  @UseGuards(AuthGuard())
+  async create(@Body() createOrderDto: CreateOrderDto, @GetUser() user: User) {
+    return this.ordersService.create(createOrderDto, user);
   }
   @Put('/:id')
   async update(

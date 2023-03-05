@@ -21,10 +21,11 @@ export class OrderDetailsService {
         return found;
     }
     async create(createOrderDto: CreateOrderDetailDto) {
-        const { price, date, note } = createOrderDto;
+        const { qty, note, product } = createOrderDto;
         const orderDetail = new OrderDetail();
-        orderDetail.date = date;
         orderDetail.note = note;
+        orderDetail.qty = qty;
+        orderDetail.product = product;
         return await orderDetail.save();
     }
     async update(id: number, updateOrderDto: UpdateOrderDetailDto) {
