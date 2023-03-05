@@ -9,6 +9,7 @@ export class OrdersService {
     constructor(
         @InjectRepository(Order) private orderRepository: Repository<Order>,
     ) { }
+
     find() {
         return this.orderRepository.find();
     }
@@ -20,13 +21,43 @@ export class OrdersService {
         return found;
     }
 
-    async findByProduct(productId: number) { }
+    async remove(id: number) {
+        const order = await this.findOne(id);
+        return await order.remove();
+    }
+
     async create(createOrderDto: CreateOrderDto) {
-        const { note, ordercode } = createOrderDto;
+        const { note, ordercode, tax, payment, discount } = createOrderDto;
         const order = new Order();
         order.note = note;
         order.ordercode = ordercode;
-        return await order.save();
+        order.tax = tax;
+        order.discount = discount;
+        order.payment = payment;
+        const result = await order.save();
+        return this.responseOrderWithCal(result);
+    }
+
+    responseOrderWithCal(order: Order) {
+        const calOrderTotal = this.calORderTotal(order);
+        return {
+            ...calOrderTotal,
+            ...order,
+        };
+    }
+
+    calORderTotal(order: Order) {
+        let total = 0;
+        order.orderDetails.forEach((orderDetail) => {
+            total += orderDetail.qty * orderDetail.product.price;
+        });
+        const totalDiscount = +(total * (order.discount.percent / 100)).toFixed(2);
+        const totalTax = +(totalDiscount * (order.tax / 100)).toFixed(2);
+        return {
+            total,
+            totalDiscount,
+            totalTax,
+        };
     }
     async update(id: number, updateOrderDto: UpdateOrderDto) {
         const { note, ordercode } = updateOrderDto;

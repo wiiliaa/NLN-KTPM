@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Comment } from '@src/comments/comments.entity';
 import { Discount } from '@src/discounts/discounts.entity';
 import { File } from '@src/files/files.entity';
@@ -47,14 +46,11 @@ export class Product extends BaseEntity {
   @Column()
   description: string;
 
-  @OneToMany(() => OrderDetail, (order_detail) => order_detail.product)
+  @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.product)
   orderDetails: OrderDetail[];
 
   @OneToMany(() => Comment, (comment) => comment.product)
   comments: Comment[];
-
-  @OneToMany(() => Discount, (discount) => discount.product)
-  discount: Discount[];
 
   @OneToMany(() => File, (file) => file.product)
   files: File[];
@@ -66,7 +62,7 @@ export class Product extends BaseEntity {
   productcategory: ProductCategory;
 
   @OneToMany(() => ProductMeta, (productmeta) => productmeta.product)
-  productmeta: ProductMeta[];
+  productmetas: ProductMeta[];
 
   @OneToOne(() => Status, (status) => status.product)
   status: Status;

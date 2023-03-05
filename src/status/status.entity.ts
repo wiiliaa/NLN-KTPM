@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { Comment } from '@src/comments/comments.entity';
 import { Product } from '@src/products/products.entity';
 import { User } from 'src/auth/user.entity';
 import { PaymentOrder } from 'src/payment_orders/payment_orders.entity';
@@ -32,10 +33,13 @@ export class Status extends BaseEntity {
     @OneToOne(() => User)
     user: User;
 
+    @OneToMany(() => Comment, (comment) => comment.status)
+    comments: Comment[];
+
     @OneToMany(() => PaymentOrder, (paymentorder) => paymentorder.status)
     paymentOrders: PaymentOrder[];
 
-    @OneToMany(()=>Product,(product)=>product.status)
+    @OneToMany(() => Product, (product) => product.status)
     product: Product[];
 
     @CreateDateColumn({

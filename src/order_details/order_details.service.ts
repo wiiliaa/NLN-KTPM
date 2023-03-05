@@ -1,48 +1,45 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { OrderDetail } from "./order_details.entity";
-import { CreateOrderDetailDto } from "./dto/create-order_detail.dto";
-import { UpdateOrderDetailDto } from "./dto/update-order_detail.dto";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { OrderDetail } from './order_details.entity';
+import { CreateOrderDetailDto } from './dto/create-order_detail.dto';
+import { UpdateOrderDetailDto } from './dto/update-order_detail.dto';
 @Injectable()
 export class OrderDetailsService {
     constructor(
-        @InjectRepository(OrderDetail) private orderDetailRepository: Repository<OrderDetail>
-      ) { }
+        @InjectRepository(OrderDetail)
+        private orderDetailRepository: Repository<OrderDetail>,
+    ) { }
     find() {
         return this.orderDetailRepository.find();
     }
     async findOne(id: number) {
         const found = await this.orderDetailRepository.findOne({ where: { id } });
         if (!found) {
-          throw new InternalServerErrorException(`Files:${id} non exist`);
+            throw new InternalServerErrorException(`Files:${id} non exist`);
         }
         return found;
     }
     async create(createOrderDto: CreateOrderDetailDto) {
         const { price, date, note } = createOrderDto;
         const orderDetail = new OrderDetail();
-        orderDetail.price = price;
         orderDetail.date = date;
         orderDetail.note = note;
         return await orderDetail.save();
     }
     async update(id: number, updateOrderDto: UpdateOrderDetailDto) {
-        const { price,  date, note } = updateOrderDto;
+        const { price, date, note } = updateOrderDto;
         let orderDetail = await this.findOne(id);
-        if (price) {
-            orderDetail.price = price;        
-        }
         if (date) {
-            orderDetail.date = date;        
+            orderDetail.date = date;
         }
         if (note) {
-            orderDetail.note = note;        
+            orderDetail.note = note;
         }
         await orderDetail.save();
         return orderDetail;
-      }
+    }
     async delete(id: number) {
-       return this.orderDetailRepository.delete(id);
+        return this.orderDetailRepository.delete(id);
     }
 }

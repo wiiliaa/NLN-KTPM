@@ -7,11 +7,13 @@ import { CommentsModule } from './comments/comments.module';
 import { typeOrmConfig } from './config/TypeOrm.config';
 import { DiscountsModule } from './discounts/discounts.module';
 import { FilesModule } from './files/files.module';
+import { OrdersModule } from './orders/orders.module';
+import { PaymentsModule } from './payments/payments.module';
 import { ProductsModule } from './products/products.module';
 import { ProductMetasModule } from './product_metas/product_metas.module';
 import { RolesModule } from './roles/roles.module';
 import { TransportsModule } from './transports/transports.module';
-
+import { UsersModule } from './users/users.module';
 
 @Module({
   controllers: [AppController],
@@ -26,6 +28,9 @@ import { TransportsModule } from './transports/transports.module';
     TransportsModule,
     AuthModule,
     CommentsModule,
+    UsersModule,
+    PaymentsModule,
+    OrdersModule,
   ],
 })
 export class AppModule { }
