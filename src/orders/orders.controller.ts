@@ -16,12 +16,7 @@ export class OrdersController {
 
   @Get()
   async find() {
-    let results = [];
-    const orders = await this.ordersService.find();
-    orders.forEach((order) => {
-      results.push(this.ordersService.responseOrderWithCal(order));
-    });
-    return results;
+    return this.ordersService.find();
   }
   @Get('/:id')
   async findOne(@Param('id') id: number) {
