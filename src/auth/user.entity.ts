@@ -49,14 +49,14 @@ export class User extends BaseEntity {
   ward_name: string;
   */
 
-  @OneToOne(()=> Role, role=> role.user)
+  @OneToOne(() => Role, (role) => role.user)
   roles: Role;
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
 
-  @OneToOne(() => PaymentOrder, (paymentOrder) => paymentOrder.user)
-  paymentOrder: PaymentOrder;
+  @OneToMany(() => PaymentOrder, (paymentOrder) => paymentOrder.user)
+  paymentOrders: PaymentOrder[];
 
   @OneToOne(() => Role)
   role: Role;
