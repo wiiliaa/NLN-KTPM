@@ -14,6 +14,7 @@ import { OrderDetail } from 'src/order_details/order_details.entity';
 import { Payment } from 'src/payments/payments.entity';
 import { User } from 'src/auth/user.entity';
 import { Discount } from '@src/discounts/discounts.entity';
+import { PaymentOrder } from '@src/payment_orders/payment_orders.entity';
 
 @Entity()
 export class Order extends BaseEntity {
@@ -43,6 +44,13 @@ export class Order extends BaseEntity {
         eager: true,
     })
     payment: Payment;
+
+    @OneToOne(() => PaymentOrder, {
+        cascade: true,
+        eager: true,
+    })
+    @JoinColumn()
+    paymentOrder: PaymentOrder;
 
     @ManyToOne(() => User, (user) => user.orders, {
         eager: true,

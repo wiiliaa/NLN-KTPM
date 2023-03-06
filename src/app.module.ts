@@ -12,6 +12,7 @@ import { PaymentsModule } from './payments/payments.module';
 import { ProductsModule } from './products/products.module';
 import { ProductMetasModule } from './product_metas/product_metas.module';
 import { RolesModule } from './roles/roles.module';
+import { StatusModule } from './status/status.module';
 import { TransportsModule } from './transports/transports.module';
 import { UsersModule } from './users/users.module';
 
@@ -31,6 +32,7 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     PaymentsModule,
     OrdersModule,
+    StatusModule,
   ],
 })
 export class AppModule { }

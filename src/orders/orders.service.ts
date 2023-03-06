@@ -34,8 +34,15 @@ export class OrdersService {
     }
 
     async create(createOrderDto: CreateOrderDto, user: User) {
-        const { note, ordercode, tax, payment, discount, orderDetails } =
-            createOrderDto;
+        const {
+            note,
+            ordercode,
+            tax,
+            payment,
+            paymentOrder,
+            discount,
+            orderDetails,
+        } = createOrderDto;
         const order = new Order();
         order.orderDetails = [];
         if (orderDetails.length == 0) {
@@ -47,6 +54,7 @@ export class OrdersService {
         order.tax = tax;
         order.discount = discount;
         order.payment = payment;
+        order.paymentOrder = paymentOrder;
         order.user = user;
         order.orderDetails = orderDetails;
         await order.save();
@@ -68,17 +76,19 @@ export class OrdersService {
     }
 
     calORderTotal(order: Order) {
-        let total = 0;
+        let totalAll = 0;
         if (!order.orderDetails)
-            return { total, totalDiscount: 0, totalTax: 0, totalAfter: 0 };
+            return { totalAll, totalDiscount: 0, totalTax: 0, totalAfter: 0 };
         order.orderDetails.forEach((orderDetail) => {
-            total += orderDetail.qty * orderDetail.product.price;
+            totalAll += orderDetail.qty * orderDetail.product.price;
         });
-        const totalDiscount = +(total * (order.discount.percent / 100)).toFixed(2);
+        const totalDiscount = +(totalAll * (order.discount.percent / 100)).toFixed(
+            2,
+        );
         const totalTax = +(totalDiscount * (order.tax / 100)).toFixed(2);
-        const totalAfter = +(total - totalDiscount + totalTax).toFixed(2);
+        const totalAfter = +(totalAll - totalDiscount + totalTax).toFixed(2);
         return {
-            total,
+            totalAll,
             totalDiscount,
             totalTax,
             totalAfter,

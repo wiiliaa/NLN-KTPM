@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './products.entity';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
@@ -12,10 +12,34 @@ import slugify from 'slugify';
 export class ProductsService {
   constructor(
     @InjectRepository(Product) private productRepository: Repository<Product>,
+    private dataSource: DataSource,
   ) { }
 
   find() {
     return this.productRepository.find();
+  }
+
+  async test() {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const product = new Product();
+      product.name = 'test';
+      product.slug = 'test';
+      product.price = 100;
+      product.weight = 100;
+      product.description = 'test';
+
+      await queryRunner.manager.save(product);
+
+      await queryRunner.commitTransaction();
+      return queryRunner;
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   async findById(id: number) {

@@ -22,7 +22,7 @@ export class Payment extends BaseEntity {
     note: string;
 
     @OneToMany(() => PaymentOrder, (paymentOrder) => paymentOrder.payment)
-    paymentOrder?: PaymentOrder[];
+    paymentOrders: PaymentOrder[];
 
     @OneToMany(() => Order, (payment) => payment.payment)
     orders: Order[];

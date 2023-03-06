@@ -44,6 +44,7 @@ describe('AppController (e2e)', () => {
         },
       ],
     };
+    console.log(JSON.stringify(createOrderDto));
     const res = await request(app.getHttpServer())
       .post('/orders')
       .send(createOrderDto)

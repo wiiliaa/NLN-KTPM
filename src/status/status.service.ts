@@ -1,15 +1,15 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { Status } from "./status.entity";
-import { CreateStatusDto } from "./dto/create-status.dto";
-import { UpdateStatusDto } from "./dto/update-status.dto";
-import { User } from "src/auth/user.entity";
-import { isAdmin } from "src/common/utils/user";
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Status } from './status.entity';
+import { CreateStatusDto } from './dto/create-status.dto';
+import { UpdateStatusDto } from './dto/update-status.dto';
+import { User } from 'src/auth/user.entity';
+import { isAdmin } from 'src/common/utils/user';
 @Injectable()
 export class StatusService {
     constructor(
-        @InjectRepository(Status) private statusRepository: Repository<Status>
+        @InjectRepository(Status) private statusRepository: Repository<Status>,
     ) { }
 
     find() {
@@ -23,20 +23,15 @@ export class StatusService {
         return found;
     }
     async create(user: User, createStatusDto: CreateStatusDto) {
-        if (!isAdmin(user)) {
-            throw new InternalServerErrorException("You cant create status");
-        }
         const { name, description, target } = createStatusDto;
         const status = new Status();
         status.name = name;
         status.description = description;
         status.target = target;
+        status.user = user;
         return await status.save();
     }
-    async update(id: number, user: User, updateStatusDto: UpdateStatusDto) {
-        if (!isAdmin(user)) {
-            throw new InternalServerErrorException("You Cant update status");
-        }
+    async update(id: number, updateStatusDto: UpdateStatusDto) {
         const { name, description, target } = updateStatusDto;
         let status = await this.findOne(id);
         if (name) {
@@ -54,7 +49,7 @@ export class StatusService {
     async delete(id: number, user: User) {
         let status = false;
         if (!isAdmin(user)) {
-            throw new InternalServerErrorException("You Cant delete status");
+            throw new InternalServerErrorException('You Cant delete status');
         }
         const target = await this.statusRepository.delete(id);
 
