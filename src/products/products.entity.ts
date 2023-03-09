@@ -28,6 +28,9 @@ export class Product extends BaseEntity {
   @Column()
   slug: string;
 
+  @Column()
+  qty: number;
+
   @Column({ type: 'float' })
   price: number;
 
@@ -40,28 +43,32 @@ export class Product extends BaseEntity {
   @Column({ default: 0 })
   height: number;
 
-  @Column({ nullable: true })
-  image: string;
-
   @Column()
   description: string;
 
   @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.product)
   orderDetails: OrderDetail[];
 
-  @OneToMany(() => Comment, (comment) => comment.product)
+  @OneToMany(() => Comment, (comment) => comment.product, {
+    eager: true,
+  })
   comments: Comment[];
 
-  @OneToMany(() => File, (file) => file.product)
-  files: File[];
+  @Column({ array: true, default: [], nullable: true })
+  images: [];
 
   @ManyToOne(
     () => ProductCategory,
     (productcategory) => productcategory.product,
+    {
+      eager: true,
+    },
   )
   productcategory: ProductCategory;
 
-  @OneToMany(() => ProductMeta, (productmeta) => productmeta.product)
+  @OneToMany(() => ProductMeta, (productmeta) => productmeta.product, {
+    eager: true,
+  })
   productmetas: ProductMeta[];
 
   @OneToOne(() => Status, (status) => status.product)

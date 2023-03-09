@@ -2,14 +2,11 @@ import {
   BaseEntity,
   Column,
   Entity,
-  ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { User } from 'src/auth/user.entity';
 import { Status } from 'src/status/status.entity';
 import { Payment } from '@src/payments/payments.entity';
 
@@ -35,9 +32,6 @@ export class PaymentOrder extends BaseEntity {
 
   @OneToMany(() => Payment, (payment) => payment.paymentOrders)
   payment: Payment;
-
-  @ManyToOne(() => User, (user) => user.paymentOrders)
-  user: User;
 
   @CreateDateColumn({
     type: 'timestamp',

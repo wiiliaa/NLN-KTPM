@@ -9,12 +9,10 @@ import { Order } from './order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { User } from '@src/auth/user.entity';
-import { OrderDetailsService } from '@src/order_details/order_details.service';
 @Injectable()
 export class OrdersService {
     constructor(
         @InjectRepository(Order) private orderRepository: Repository<Order>,
-        private orderDetailService: OrderDetailsService,
     ) { }
 
     find() {
@@ -58,7 +56,6 @@ export class OrdersService {
         order.user = user;
         order.orderDetails = orderDetails;
         await order.save();
-
         const result = await order.save();
         return this.responseOrderWithCal(result);
     }

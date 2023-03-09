@@ -17,12 +17,17 @@ export class ProductsController {
 
   @Get()
   async find() {
-    return this.productService.find();
+    const products = await this.productService.find();
+    const result = products.map((product) => {
+      return this.productService.parseToResult(product);
+    });
+    return result;
   }
 
-  @Get('/test')
-  async test() {
-    return this.productService.test();
+  @Get('/:slug')
+  async findSlug(@Param('slug') slug: string) {
+    const product = await this.productService.findBySlug(slug);
+    return this.productService.parseToResult(product);
   }
 
   @Get('/name/:name')

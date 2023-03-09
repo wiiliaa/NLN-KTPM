@@ -1,11 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { Product } from '@src/products/products.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -23,9 +21,6 @@ export class File extends BaseEntity {
 
   @Column()
   contentType: string;
-
-  @ManyToOne(()=>Product, (product)=> product.files)
-  product: Product;
 
   @CreateDateColumn({
     type: 'timestamp',

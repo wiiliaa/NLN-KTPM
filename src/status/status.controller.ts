@@ -16,15 +16,15 @@ import { UpdateStatusDto } from './dto/update-status.dto';
 import { StatusService } from './status.service';
 @Controller('status')
 export class StatusController {
-    constructor(private StatusService: StatusService) { }
+    constructor(private statusService: StatusService) { }
 
     @Get()
     async find() {
-        return this.StatusService.find();
+        return this.statusService.find();
     }
     @Get('/:id')
     async findOne(@Param('id') id: number) {
-        return this.StatusService.findOne(id);
+        return this.statusService.findOne(id);
     }
 
     @UseGuards(AuthGuard())
@@ -33,18 +33,18 @@ export class StatusController {
         @GetUser() user: User,
         @Body() updateStatusDto: CreateStatusDto,
     ) {
-        return this.StatusService.create(user, updateStatusDto);
+        return this.statusService.create(user, updateStatusDto);
     }
     @Put('/:id')
     async update(
         @Param('id') id: number,
         @Body() updateStatusDto: UpdateStatusDto,
     ) {
-        return this.StatusService.update(id, updateStatusDto);
+        return this.statusService.update(id, updateStatusDto);
     }
 
     @Delete('/:id')
     async delete(@Param('id') id: number, @GetUser() user: User) {
-        return this.StatusService.delete(id, user);
+        return this.statusService.delete(id, user);
     }
 }

@@ -32,19 +32,7 @@ export class StatusService {
         return await status.save();
     }
     async update(id: number, updateStatusDto: UpdateStatusDto) {
-        const { name, description, target } = updateStatusDto;
-        let status = await this.findOne(id);
-        if (name) {
-            status.name = name;
-        }
-        if (description) {
-            status.description = description;
-        }
-        if (target) {
-            status.target = target;
-        }
-        await status.save();
-        return status;
+        return this.statusRepository.update(id, updateStatusDto);
     }
     async delete(id: number, user: User) {
         let status = false;
