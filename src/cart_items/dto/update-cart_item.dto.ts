@@ -1,5 +1,3 @@
-
-
-export class UpdateCartItemDto{
-    quatity: number
+export class UpdateCartItemDto {
+    qty: number;
 }

@@ -1,8 +1,6 @@
 import { CartItems } from '@src/cart_items/cart_item.entity';
 
 import { Comment } from '@src/comments/comments.entity';
-import { Discount } from '@src/discounts/discounts.entity';
-import { File } from '@src/files/files.entity';
 import { ProductCategory } from '@src/product_categories/product_categories.entity';
 import { ProductMeta } from '@src/product_metas/product-metas.entity';
 import { Status } from '@src/status/status.entity';
@@ -66,18 +64,18 @@ export class Product extends BaseEntity {
       eager: true,
     },
   )
-  productcategory: ProductCategory;
+  productCategory: ProductCategory;
 
   @OneToMany(() => ProductMeta, (productmeta) => productmeta.product, {
     eager: true,
   })
-  productmetas: ProductMeta[];
+  productMetas: ProductMeta[];
 
   @OneToOne(() => Status, (status) => status.product)
   status: Status;
 
   @ManyToOne(() => CartItems, (cartItem) => cartItem.product)
-  cartItem: CartItems;
+  cartItems: CartItems[];
 
   @CreateDateColumn({
     type: 'timestamp',

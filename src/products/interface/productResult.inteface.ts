@@ -11,6 +11,7 @@ export interface IProductResult {
     type: string;
     track_inventory: boolean;
   };
+  product_metas: any;
   price: {
     value: number;
     min: number;

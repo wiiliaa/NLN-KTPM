@@ -1,17 +1,16 @@
 /* eslint-disable prettier/prettier */
-import { ProductGroup } from "@src/product_groups/product_group.entity";
-import { Product } from "@src/products/products.entity";
+import { ProductGroup } from '@src/product_groups/product_group.entity';
+import { Product } from '@src/products/products.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
-  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
+} from 'typeorm';
 
 @Entity()
 export class ProductCategory extends BaseEntity {
@@ -27,22 +26,22 @@ export class ProductCategory extends BaseEntity {
   @Column()
   description: string;
 
-  @OneToOne(()=>Product,(product)=>product.productcategory)
+  @OneToOne(() => Product, (product) => product.productCategory)
   product: Product;
 
-  @ManyToOne(()=>ProductGroup, (productGroup)=> productGroup.productCategory)
+  @ManyToOne(() => ProductGroup, (productGroup) => productGroup.productCategory)
   productGroup: ProductGroup;
 
   @CreateDateColumn({
-    type: "timestamp",
-    default: () => "CURRENT_TIMESTAMP(6)",
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
   })
   public created_at: Date;
 
   @UpdateDateColumn({
-    type: "timestamp",
-    default: () => "CURRENT_TIMESTAMP(6)",
-    onUpdate: "CURRENT_TIMESTAMP(6)",
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
   public updated_at: Date;
 }

@@ -23,11 +23,12 @@ export class ProductsService {
       has_variants: false,
       item_id: product.id,
       commodity_group: {
-        group_id: product.productcategory.id,
-        title: product.productcategory.name,
+        group_id: product.productCategory?.id,
+        title: product.productCategory?.name,
         type: 'product',
         track_inventory: true,
       },
+      product_metas: product.productMetas,
       price: {
         value: product.price,
         min: product.price,
@@ -46,9 +47,9 @@ export class ProductsService {
         },
       },
       default_category: {
-        category_id: product.productcategory.id,
-        title: product.productcategory.name,
-        url_key: product.productcategory.slug,
+        category_id: product.productCategory.id,
+        title: product.productCategory.name,
+        url_key: product.productCategory.slug,
       },
       images: [product.image],
       labels: [

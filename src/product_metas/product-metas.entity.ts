@@ -21,7 +21,7 @@ export class ProductMeta extends BaseEntity {
   @Column()
   value: string;
 
-  @ManyToOne(() => Product, (product) => product.productmetas)
+  @ManyToOne(() => Product, (product) => product.productMetas)
   product: Product;
 
   @CreateDateColumn({

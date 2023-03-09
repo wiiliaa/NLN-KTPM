@@ -1,3 +1,3 @@
-export class CreateCartItemDto{
-    quatity: number;
+export class CreateCartItemDto {
+    qty: number;
 }
