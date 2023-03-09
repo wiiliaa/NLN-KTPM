@@ -14,6 +14,7 @@ import { TransportsModule } from './transports/transports.module';
 import { OrdersModule } from './orders/orders.module';
 import { CartsModule } from './carts/carts.module';
 import { CartItemsModule } from './cart_items/cart_items.module';
+import { ProductGroupsModule } from './product_groups/product_groups.module';
 
 
 @Module({
@@ -32,6 +33,7 @@ import { CartItemsModule } from './cart_items/cart_items.module';
     OrdersModule,
     CartsModule,
     CartItemsModule,
+    ProductGroupsModule,
   ],
 })
 export class AppModule { }

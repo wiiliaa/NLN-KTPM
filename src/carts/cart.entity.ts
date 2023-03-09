@@ -1,5 +1,6 @@
 
-import { BaseEntity, Column, CreateDateColumn, Entity,  PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { CartItems } from "@src/cart_items/cart_item.entity";
+import { BaseEntity, Column, CreateDateColumn, Entity,  ManyToOne,  OneToMany,  PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 
@@ -10,6 +11,9 @@ export class Cart extends BaseEntity{
     @Column()
     total: number;
 
+
+    @OneToMany(()=> CartItems, (cartItem)=> cartItem.cart)
+    cartItems: CartItems[];
 
     @CreateDateColumn({
         type: 'timestamp',
