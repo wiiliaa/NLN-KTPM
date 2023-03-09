@@ -4,15 +4,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from 'src/auth/user.entity';
-import { OrderDetail } from '@src/order_details/order_details.entity';
-import { Product } from '@src/products/products.entity';
+import { Order } from '@src/orders/order.entity';
 
 @Entity()
 export class Discount extends BaseEntity {
@@ -40,11 +38,8 @@ export class Discount extends BaseEntity {
   @OneToOne(() => User)
   user: User;
 
-  @OneToMany(()=>OrderDetail,(orderdetail)=>orderdetail)
-  orderDetails:OrderDetail[];
-
-  @ManyToOne(()=> Product,(product)=> product.discount)
-  product: Product;
+  @OneToMany(() => Order, (order) => order.discount)
+  orders: Order[];
 
   @CreateDateColumn({
     type: 'timestamp',

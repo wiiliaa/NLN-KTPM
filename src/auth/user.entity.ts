@@ -10,7 +10,6 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Order } from 'src/orders/order.entity';
-import { PaymentOrder } from 'src/payment_orders/payment_orders.entity';
 import { Role } from 'src/roles/roles.entity';
 
 @Entity()
@@ -23,7 +22,7 @@ export class User extends BaseEntity {
 
   @Column()
   password: string;
-  /*
+
   @Column()
   fullname: string;
 
@@ -34,10 +33,10 @@ export class User extends BaseEntity {
   email: string;
 
   @Column()
-  address: string;
+  phone: string;
 
   @Column()
-  phone: string;
+  address: string;
 
   @Column()
   province_name: string;
@@ -47,16 +46,12 @@ export class User extends BaseEntity {
 
   @Column()
   ward_name: string;
-  */
 
-  @OneToOne(()=> Role, role=> role.user)
+  @OneToOne(() => Role, (role) => role.user)
   roles: Role;
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
-
-  @OneToOne(() => PaymentOrder, (paymentOrder) => paymentOrder.user)
-  paymentOrder: PaymentOrder;
 
   @OneToOne(() => Role)
   role: Role;

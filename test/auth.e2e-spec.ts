@@ -61,12 +61,13 @@ describe('AuthController (e2e)', () => {
     expect(resLogined.statusCode).toEqual(401);
   });
 
-  it('should be failed authorization', async () => {
+  it('should be correct authorization', async () => {
     const body = { username: 'Mittie99', password: 'yYqFA0wl432dStu' };
     const res = await request(app.getHttpServer())
       .post('/auth/login')
       .send(body);
     const { accessToken } = res.body;
+    console.log(accessToken);
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty('accessToken');
 

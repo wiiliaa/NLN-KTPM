@@ -1,5 +1,3 @@
-import { Discount } from '@src/discounts/discounts.entity';
-import { Transport } from '@src/transports/transports.entity';
 import { Order } from 'src/orders/order.entity';
 import { Product } from 'src/products/products.entity';
 import {
@@ -8,7 +6,11 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+<<<<<<< HEAD
   OneToOne,
+=======
+  ManyToOne,
+>>>>>>> tthao123/feature/update-order
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -19,20 +21,38 @@ export class OrderDetail extends BaseEntity {
   id: number;
 
   @Column()
+<<<<<<< HEAD
   const: number;
+=======
+  qty: number;
 
-  @Column()
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  date: Date;
+>>>>>>> tthao123/feature/update-order
+
+  @Column({ nullable: true })
   note: string;
 
-  @OneToOne(() => Product)
+  @ManyToOne(() => Product, (product) => product.orderDetails, {
+    eager: true,
+  })
+  @JoinColumn()
   product: Product;
 
+<<<<<<< HEAD
   @OneToOne(() => Order)
   @JoinColumn()
   order: Order;
 
   @OneToOne(() => Discount)
   discount: Discount;
+=======
+  @ManyToOne(() => Order)
+  order: Order;
+>>>>>>> tthao123/feature/update-order
 
   @CreateDateColumn({
     type: 'timestamp',

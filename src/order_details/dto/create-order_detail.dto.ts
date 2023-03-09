@@ -1,5 +1,7 @@
+import { Product } from '@src/products/products.entity';
+
 export class CreateOrderDetailDto {
-  price: string;
-  date: Date;
   note: string;
+  qty: number;
+  product: Product;
 }
