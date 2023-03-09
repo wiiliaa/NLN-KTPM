@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+
 import { Comment } from '@src/comments/comments.entity';
 import { Discount } from '@src/discounts/discounts.entity';
 import { File } from '@src/files/files.entity';
@@ -70,6 +71,8 @@ export class Product extends BaseEntity {
 
   @OneToOne(() => Status, (status) => status.product)
   status: Status;
+
+
 
   @CreateDateColumn({
     type: 'timestamp',

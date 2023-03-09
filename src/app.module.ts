@@ -12,6 +12,8 @@ import { ProductMetasModule } from './product_metas/product_metas.module';
 import { RolesModule } from './roles/roles.module';
 import { TransportsModule } from './transports/transports.module';
 import { OrdersModule } from './orders/orders.module';
+import { CartsModule } from './carts/carts.module';
+import { CartItemsModule } from './cart_items/cart_items.module';
 
 
 @Module({
@@ -27,7 +29,9 @@ import { OrdersModule } from './orders/orders.module';
     TransportsModule,
     AuthModule,
     CommentsModule,
-    OrdersModule
+    OrdersModule,
+    CartsModule,
+    CartItemsModule,
   ],
 })
 export class AppModule { }

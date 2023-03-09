@@ -13,13 +13,13 @@ export class OrdersService {
     find() {
         return this.orderRepository.find();
     }
-    // async findOne(id: number) {
-    //     const found = await this.orderRepository.findOne({ where: { id } });
-    //     if (!found) {
-    //         throw new InternalServerErrorException(`Files:${id} non exist`);
-    //     }
-    //     return found;
-    // }
+    async findOne(id: number) {
+        const found = await this.orderRepository.findOne({ where: { id } });
+        if (!found) {
+            throw new InternalServerErrorException(`Order:${id} non exist`);
+        }
+        return found;
+    }
     // async findByProduct(productId: number) { }
     async create(createOrderDto: CreateOrderDto) {
         const { note, ordercode } = createOrderDto;
