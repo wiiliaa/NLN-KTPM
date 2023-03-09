@@ -5,8 +5,8 @@ import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
-import Slug from 'limax';
 import slugify from 'slugify';
+import { IProductResult } from './interface/productResult.inteface';
 
 @Injectable()
 export class ProductsService {
@@ -14,7 +14,62 @@ export class ProductsService {
     @InjectRepository(Product) private productRepository: Repository<Product>,
   ) { }
 
-  find() {
+  parseToResult(product: Product): IProductResult {
+    let result: IProductResult = {
+      product_id: product.id,
+      sku: product.slug,
+      title: product.name,
+      url_key: product.slug,
+      has_variants: false,
+      item_id: product.id,
+      commodity_group: {
+        group_id: product.productcategory.id,
+        title: product.productcategory.name,
+        type: 'product',
+        track_inventory: true,
+      },
+      price: {
+        value: product.price,
+        min: product.price,
+        max: product.price,
+        old: null,
+        old_min: product.price,
+        old_max: product.price,
+        currency_alias: 'vnd',
+      },
+      props: {
+        available_qty: product.qty,
+        country_of_origin: null,
+        extra: null,
+        size: {
+          weight: product.weight,
+        },
+      },
+      default_category: {
+        category_id: product.productcategory.id,
+        title: product.productcategory.name,
+        url_key: product.productcategory.slug,
+      },
+      images: product.images,
+      labels: [
+        {
+          label_id: 4,
+          title: 'Best choice',
+          color: '#0e8a16',
+          text_color: '#000000',
+          icon: null,
+        },
+      ],
+      sort_price: product.price.toString(),
+      sort_in_stock: product.qty,
+      status: 'published',
+      deleted_at: null,
+      in_stock: true,
+    };
+    return result;
+  }
+
+  async find() {
     return this.productRepository.find();
   }
 
@@ -22,6 +77,14 @@ export class ProductsService {
     const found = await this.productRepository.findOne({ where: { id } });
     if (!found) {
       throw new InternalServerErrorException(`Product:${id} non-exist`);
+    }
+    return found;
+  }
+
+  async findBySlug(slug: string) {
+    const found = await this.productRepository.findOne({ where: { slug } });
+    if (!found) {
+      throw new InternalServerErrorException(`Product:${slug} non-exist`);
     }
     return found;
   }
@@ -39,41 +102,26 @@ export class ProductsService {
   }
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const { name, price, weight, description } = createProductDto;
+    const { name, price, weight, description, image } = createProductDto;
     const slug = slugify(name);
     const product = new Product();
-
     product.name = name;
     product.slug = slug;
     product.price = price;
     product.weight = weight;
     product.description = description;
-
+    product.image = image;
     await product.save();
-
     return product;
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
-    const { name, price, weight, description } = updateProductDto;
-    const product = await this.findById(id);
-    const slug = slugify(name);
-
-    if (name) {
-      product.name = name;
-      product.slug = slug;
-    }
-    if (price) {
-      product.price = price;
-    }
-    if (weight) {
-      product.weight = weight;
-    }
-    if (description) {
-      product.description = description;
-    }
-
-    await product.save();
+    const product = await this.productRepository
+      .createQueryBuilder('product')
+      .update()
+      .set(updateProductDto)
+      .where('id = :id', { id })
+      .execute();
     return product;
   }
 

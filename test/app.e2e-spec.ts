@@ -25,24 +25,4 @@ describe('AppController (e2e)', () => {
   it('/health_check (GET)', () => {
     return request(app.getHttpServer()).get('/health_check').expect(200);
   });
-
-  /*
-
-  it('/discounts/1', async () => {
-    let res = await request(app.getHttpServer()).get('/discounts/123');
-    expect(res.statusCode).toEqual(400);
-  });
-  it('should be sign up', async () => {
-    let username = faker.internet.userName();
-    let password = faker.internet.password();
-    console.log('test sign up:', { username, password });
-
-    let res = await request(app.getHttpServer())
-      .post('/auth/signup')
-      .send({ username, password });
-
-    console.log(res.body);
-    expect(res.statusCode).toEqual(201);
-  });
-  */
 });

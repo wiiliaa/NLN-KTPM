@@ -1,4 +1,5 @@
 import { IsDate, IsNumber, IsString } from 'class-validator';
+import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 export class CreateDiscountDto {
   @IsString()
