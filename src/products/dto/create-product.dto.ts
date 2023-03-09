@@ -5,4 +5,5 @@ export class CreateProductDto {
   width: number;
   height: number;
   description: string;
+  image: string;
 }

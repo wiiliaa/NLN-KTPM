@@ -1,5 +1,3 @@
-import { Discount } from '@src/discounts/discounts.entity';
-import { Transport } from '@src/transports/transports.entity';
 import { Order } from 'src/orders/order.entity';
 import { Product } from 'src/products/products.entity';
 import {
@@ -9,6 +7,7 @@ import {
   Entity,
   JoinColumn,
   OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -19,20 +18,25 @@ export class OrderDetail extends BaseEntity {
   id: number;
 
   @Column()
-  const: number;
+  qty: number;
 
-  @Column()
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  date: Date;
+
+  @Column({ nullable: true })
   note: string;
 
-  @OneToOne(() => Product)
+  @ManyToOne(() => Product, (product) => product.orderDetails, {
+    eager: true,
+  })
+  @JoinColumn()
   product: Product;
 
-  @OneToOne(() => Order)
-  @JoinColumn()
+  @ManyToOne(() => Order)
   order: Order;
-
-  @OneToOne(() => Discount)
-  discount: Discount;
 
   @CreateDateColumn({
     type: 'timestamp',

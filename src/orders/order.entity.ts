@@ -3,17 +3,18 @@ import {
     Column,
     Entity,
     OneToMany,
-    OneToOne,
     CreateDateColumn,
     UpdateDateColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
-} from "typeorm";
-import { OrderDetail } from "src/order_details/order_details.entity";
-import { PaymentOrder } from "src/payment_orders/payment_orders.entity";
-import { Payment } from "src/payments/payments.entity";
-import { User } from "src/auth/user.entity";
-
+    OneToOne,
+    JoinColumn,
+} from 'typeorm';
+import { OrderDetail } from 'src/order_details/order_details.entity';
+import { Payment } from 'src/payments/payments.entity';
+import { User } from 'src/auth/user.entity';
+import { Discount } from '@src/discounts/discounts.entity';
+import { PaymentOrder } from '@src/payment_orders/payment_orders.entity';
 
 @Entity()
 export class Order extends BaseEntity {
@@ -26,28 +27,53 @@ export class Order extends BaseEntity {
     @Column()
     note: string;
 
-    @OneToOne(()=>PaymentOrder)
-    paymentOrder:PaymentOrder;
+    @Column({ type: 'float', nullable: true, default: '10' })
+    tax: number;
 
-    @ManyToOne(() => Payment, (payment) => payment.orders)
+    @Column({ type: 'float', nullable: true })
+    total: number;
+
+    @ManyToOne(() => Discount, (discount) => discount.orders, {
+        eager: true,
+    })
+    @JoinColumn()
+    discount: Discount;
+
+    @ManyToOne(() => Payment, (payment) => payment.orders, {
+        cascade: true,
+        eager: true,
+    })
     payment: Payment;
 
-    @ManyToOne(() => User, (user) => user.orders)
+    @OneToOne(() => PaymentOrder, {
+        cascade: true,
+        eager: true,
+    })
+    @JoinColumn()
+    paymentOrder: PaymentOrder;
+
+    @ManyToOne(() => User, (user) => user.orders, {
+        eager: true,
+        cascade: true,
+    })
     user: User;
 
-    @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.order)
+    @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.order, {
+        eager: true,
+        cascade: true,
+    })
     orderDetails: OrderDetail[];
 
     @CreateDateColumn({
-        type: "timestamp",
-        default: () => "CURRENT_TIMESTAMP(6)",
+        type: 'timestamp',
+        default: () => 'CURRENT_TIMESTAMP(6)',
     })
     public created_at: Date;
 
     @UpdateDateColumn({
-        type: "timestamp",
-        default: () => "CURRENT_TIMESTAMP(6)",
-        onUpdate: "CURRENT_TIMESTAMP(6)",
+        type: 'timestamp',
+        default: () => 'CURRENT_TIMESTAMP(6)',
+        onUpdate: 'CURRENT_TIMESTAMP(6)',
     })
     public updated_at: Date;
 }
