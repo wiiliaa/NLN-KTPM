@@ -27,13 +27,8 @@ export class Order extends BaseEntity {
     @Column()
     note: string;
 
-<<<<<<< HEAD
-    @OneToOne(()=>PaymentOrder)
-    paymentOrder:PaymentOrder;
-=======
     @Column({ type: 'float', nullable: true, default: '10' })
     tax: number;
->>>>>>> tthao123/feature/update-order
 
     @Column({ type: 'float', nullable: true })
     total: number;
@@ -63,14 +58,10 @@ export class Order extends BaseEntity {
     })
     user: User;
 
-<<<<<<< HEAD
-    @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.order)
-=======
     @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.order, {
         eager: true,
         cascade: true,
     })
->>>>>>> tthao123/feature/update-order
     orderDetails: OrderDetail[];
 
     @CreateDateColumn({

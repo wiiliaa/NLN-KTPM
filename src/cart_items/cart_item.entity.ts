@@ -1,4 +1,6 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Cart } from "@src/carts/cart.entity";
+import { Product } from "@src/products/products.entity";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 
 @Entity()
@@ -9,6 +11,12 @@ import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, U
 
     @Column()
     quatity: number;
+
+    @ManyToOne(()=> Cart, (cart)=> cart.cartItems)
+    cart: Cart;
+
+    @OneToMany(()=> Product, (product)=> product.cartItem)
+    product: Product[];
 
     @CreateDateColumn({
         type: 'timestamp',

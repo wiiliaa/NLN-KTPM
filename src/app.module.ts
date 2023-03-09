@@ -14,14 +14,10 @@ import { ProductMetasModule } from './product_metas/product_metas.module';
 import { RolesModule } from './roles/roles.module';
 import { StatusModule } from './status/status.module';
 import { TransportsModule } from './transports/transports.module';
-<<<<<<< HEAD
-import { OrdersModule } from './orders/orders.module';
 import { CartsModule } from './carts/carts.module';
 import { CartItemsModule } from './cart_items/cart_items.module';
-
-=======
+import { ProductGroupsModule } from './product_groups/product_groups.module';
 import { UsersModule } from './users/users.module';
->>>>>>> tthao123/feature/update-order
 
 @Module({
   controllers: [AppController],
@@ -36,16 +32,15 @@ import { UsersModule } from './users/users.module';
     TransportsModule,
     AuthModule,
     CommentsModule,
-<<<<<<< HEAD
     OrdersModule,
     CartsModule,
     CartItemsModule,
-=======
+    ProductGroupsModule,
     UsersModule,
     PaymentsModule,
     OrdersModule,
     StatusModule,
->>>>>>> tthao123/feature/update-order
+
   ],
 })
 export class AppModule { }

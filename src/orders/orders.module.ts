@@ -9,12 +9,6 @@ import { OrderDetailsModule } from '@src/order_details/order_details.module';
 @Module({
   controllers: [OrdersController],
   providers: [OrdersService],
-<<<<<<< HEAD
-  imports: [TypeOrmModule.forFeature([Order])],
-  exports: [OrdersService]
-
-=======
   imports: [TypeOrmModule.forFeature([Order]), AuthModule, OrderDetailsModule],
->>>>>>> tthao123/feature/update-order
 })
 export class OrdersModule { }

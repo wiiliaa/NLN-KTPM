@@ -6,11 +6,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-<<<<<<< HEAD
   OneToOne,
-=======
   ManyToOne,
->>>>>>> tthao123/feature/update-order
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -21,9 +18,6 @@ export class OrderDetail extends BaseEntity {
   id: number;
 
   @Column()
-<<<<<<< HEAD
-  const: number;
-=======
   qty: number;
 
   @CreateDateColumn({
@@ -31,7 +25,6 @@ export class OrderDetail extends BaseEntity {
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
   date: Date;
->>>>>>> tthao123/feature/update-order
 
   @Column({ nullable: true })
   note: string;
@@ -42,17 +35,8 @@ export class OrderDetail extends BaseEntity {
   @JoinColumn()
   product: Product;
 
-<<<<<<< HEAD
-  @OneToOne(() => Order)
-  @JoinColumn()
-  order: Order;
-
-  @OneToOne(() => Discount)
-  discount: Discount;
-=======
   @ManyToOne(() => Order)
   order: Order;
->>>>>>> tthao123/feature/update-order
 
   @CreateDateColumn({
     type: 'timestamp',

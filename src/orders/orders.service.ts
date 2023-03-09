@@ -26,11 +26,6 @@ export class OrdersService {
         }
         return found;
     }
-<<<<<<< HEAD
-    // async findByProduct(productId: number) { }
-    async create(createOrderDto: CreateOrderDto) {
-        const { note, ordercode } = createOrderDto;
-=======
 
     async remove(id: number) {
         const order = await this.findOne(id);
@@ -47,7 +42,6 @@ export class OrdersService {
             discount,
             orderDetails,
         } = createOrderDto;
->>>>>>> tthao123/feature/update-order
         const order = new Order();
         order.orderDetails = [];
         if (orderDetails.length == 0) {

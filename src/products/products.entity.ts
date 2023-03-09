@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-/* eslint-disable prettier/prettier */
 
-=======
->>>>>>> tthao123/feature/update-order
+import { CartItems } from '@src/cart_items/cart_item.entity';
+
 import { Comment } from '@src/comments/comments.entity';
 import { Discount } from '@src/discounts/discounts.entity';
 import { File } from '@src/files/files.entity';
@@ -51,6 +49,9 @@ export class Product extends BaseEntity {
   @Column()
   description: string;
 
+  @Column()
+  image: string
+
   @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.product)
   orderDetails: OrderDetail[];
 
@@ -78,6 +79,9 @@ export class Product extends BaseEntity {
 
   @OneToOne(() => Status, (status) => status.product)
   status: Status;
+
+  @ManyToOne(()=>CartItems, (cartItem)=> cartItem.product)
+  cartItem: CartItems;
 
 
 

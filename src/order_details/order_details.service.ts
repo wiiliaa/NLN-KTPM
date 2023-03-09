@@ -1,18 +1,9 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-<<<<<<< HEAD
-import { InjectRepository } from "@nestjs/typeorm";
-import { FindOptionsWhere, Repository } from "typeorm";
-import { OrderDetail } from "./order_details.entity";
-import { Order } from '@src/orders/order.entity';
-import { CreateOrderDetailDto } from "./dto/create-order_detail.dto";
-import { UpdateOrderDetailDto } from "./dto/update-order_detail.dto";
-=======
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OrderDetail } from './order_details.entity';
 import { CreateOrderDetailDto } from './dto/create-order_detail.dto';
 import { UpdateOrderDetailDto } from './dto/update-order_detail.dto';
->>>>>>> tthao123/feature/update-order
 @Injectable()
 export class OrderDetailsService {
     constructor(
@@ -37,11 +28,7 @@ export class OrderDetailsService {
     //     return found;
     // }
     async create(createOrderDto: CreateOrderDetailDto) {
-<<<<<<< HEAD
-        const { note } = createOrderDto;
-=======
         const { qty, note, product } = createOrderDto;
->>>>>>> tthao123/feature/update-order
         const orderDetail = new OrderDetail();
         orderDetail.note = note;
         orderDetail.qty = qty;
@@ -49,16 +36,11 @@ export class OrderDetailsService {
         return await orderDetail.save();
     }
     async update(id: number, updateOrderDto: UpdateOrderDetailDto) {
-<<<<<<< HEAD
-        const { note } = updateOrderDto;
-        let orderDetail = await this.findOne(id);
-=======
         const { price, date, note } = updateOrderDto;
         let orderDetail = await this.findOne(id);
         if (date) {
             orderDetail.date = date;
         }
->>>>>>> tthao123/feature/update-order
         if (note) {
             orderDetail.note = note;
         }

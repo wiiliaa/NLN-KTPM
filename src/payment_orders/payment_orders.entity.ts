@@ -33,20 +33,6 @@ export class PaymentOrder extends BaseEntity {
   @OneToMany(() => Payment, (payment) => payment.paymentOrders)
   payment: Payment;
 
-<<<<<<< HEAD
-  @OneToOne(()=>Order)
-  order:Order;
-
-  @ManyToOne(() => User, (user) => user.paymentOrder)
-  user: User;
-
-
-  @OneToOne(()=>Status)
-  status:Status;
-
-
-=======
->>>>>>> tthao123/feature/update-order
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
