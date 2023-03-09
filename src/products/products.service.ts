@@ -50,7 +50,7 @@ export class ProductsService {
         title: product.productcategory.name,
         url_key: product.productcategory.slug,
       },
-      images: product.images,
+      images: [product.image],
       labels: [
         {
           label_id: 4,

@@ -1,4 +1,3 @@
-
 import { CartItems } from '@src/cart_items/cart_item.entity';
 
 import { Comment } from '@src/comments/comments.entity';
@@ -50,7 +49,7 @@ export class Product extends BaseEntity {
   description: string;
 
   @Column()
-  image: string
+  image: string;
 
   @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.product)
   orderDetails: OrderDetail[];
@@ -59,9 +58,6 @@ export class Product extends BaseEntity {
     eager: true,
   })
   comments: Comment[];
-
-  @Column({ array: true, default: [], nullable: true })
-  images: [];
 
   @ManyToOne(
     () => ProductCategory,
@@ -80,10 +76,8 @@ export class Product extends BaseEntity {
   @OneToOne(() => Status, (status) => status.product)
   status: Status;
 
-  @ManyToOne(()=>CartItems, (cartItem)=> cartItem.product)
+  @ManyToOne(() => CartItems, (cartItem) => cartItem.product)
   cartItem: CartItems;
-
-
 
   @CreateDateColumn({
     type: 'timestamp',

@@ -33,7 +33,7 @@ export interface IProductResult {
     title: string;
     url_key: string;
   };
-  images: [];
+  images: any;
   labels: object;
   sort_price: string;
   sort_in_stock: number;
