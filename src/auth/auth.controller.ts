@@ -9,6 +9,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthCredentials } from './dto/auth-credentials.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { GetUser } from './get-user.decorator';
 import { User } from './user.entity';
 
@@ -22,8 +23,8 @@ export class AuthController {
   }
 
   @Post('/signup')
-  async signUp(@Body(ValidationPipe) authCredentials: AuthCredentials) {
-    return this.authService.signUp(authCredentials);
+  async signUp(@Body(ValidationPipe) createUserDto: CreateUserDto) {
+    return this.authService.signUp(createUserDto);
   }
 
   @Get('/user')

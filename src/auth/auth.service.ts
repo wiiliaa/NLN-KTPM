@@ -10,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { AuthCredentials } from './dto/auth-credentials.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { JwtPayload } from './jwt-payload.interface';
 import { User } from './user.entity';
 @Injectable()
@@ -20,21 +21,31 @@ export class AuthService {
         private jwtSerivce: JwtService,
     ) { }
 
-    async signUp(authCredentials: AuthCredentials) {
-        const { username, password } = authCredentials;
+    async signUp(createUserDto: CreateUserDto) {
+        const {
+            username,
+            password,
+            fullname,
+            birthday,
+            email,
+            phone,
+            address,
+            province_name,
+            district_name,
+            ward_name,
+        } = createUserDto;
         const user = new User();
         user.username = username;
         user.password = password;
-        try {
-            await user.save();
-        } catch (error) {
-            console.log(error);
-            if (error.code == 23505) {
-                throw new ConflictException('username already exist');
-            } else {
-                throw new InternalServerErrorException();
-            }
-        }
+        user.fullname = fullname;
+        user.birthday = birthday;
+        user.email = email;
+        user.phone = phone;
+        user.address = address;
+        user.province_name = province_name;
+        user.district_name = district_name;
+        user.ward_name = ward_name;
+        await user.save();
         return user;
     }
 

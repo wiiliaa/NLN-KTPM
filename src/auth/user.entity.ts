@@ -11,6 +11,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { Order } from 'src/orders/order.entity';
 import { Role } from 'src/roles/roles.entity';
+import { Cart } from '@src/carts/cart.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -52,6 +53,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
+
+  @OneToOne(() => Cart)
+  cart: Cart;
 
   @OneToOne(() => Role)
   role: Role;

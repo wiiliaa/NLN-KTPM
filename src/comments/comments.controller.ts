@@ -1,14 +1,19 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
-import { CommentsService } from "./comments.service";
-import { CreateCommentDto } from "./dto/create-comment.dto";
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { CommentsService } from './comments.service';
+import { CreateCommentDto } from './dto/create-comment.dto';
 
-@Controller("comments")
+@Controller('comments')
 export class CommentsController {
   constructor(private commentsService: CommentsService) { }
 
-  @Get("/:id")
-  async findOne(@Param("id") id: number) {
+  @Get('/:id')
+  async findOne(@Param('id') id: number) {
     return this.commentsService.findOne(id);
+  }
+
+  @Get('/product/:productId')
+  async findByProduct(@Param('productId') productId: number) {
+    return this.commentsService.findByProduct(productId);
   }
 
   @Post()

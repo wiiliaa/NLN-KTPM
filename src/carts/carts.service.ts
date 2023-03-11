@@ -1,5 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '@src/auth/user.entity';
 import { Repository } from 'typeorm';
 import { Cart } from './cart.entity';
 import { CreateCartDto } from './dto/create-cart.dto';
@@ -23,14 +24,13 @@ export class CartService {
         return found;
     }
 
-    async create(createCartDto: CreateCartDto): Promise<Cart> {
+    async create(createCartDto: CreateCartDto, user: User): Promise<Cart> {
         const { total } = createCartDto;
-        const cartItems = new Cart();
-
-        cartItems.total = total;
-
-        await cartItems.save();
-        return cartItems;
+        const cart = new Cart();
+        cart.total = total;
+        cart.user = user;
+        await cart.save();
+        return cart;
     }
 
     async update(id: number, updateCartDto: UpdateCartDto) {

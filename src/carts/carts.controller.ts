@@ -1,34 +1,47 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+    UseGuards,
+} from '@nestjs/common';
 import { CartService } from './carts.service';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { CreateCartDto } from './dto/create-cart.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from '@src/auth/get-user.decorator';
+import { User } from '@src/auth/user.entity';
 
 @Controller('cart')
 export class CartController {
-    constructor(private cartService : CartService) {}
+    constructor(private cartService: CartService) { }
 
     @Get()
-    async find(){
+    async find() {
         return this.cartService.find();
     }
-    
-    @Get("/id/:id")
-    async findByName(@Param("id") id: number ) {
-    return this.cartService.findById(id);
+
+    @Get('/id/:id')
+    async findByName(@Param('id') id: number) {
+        return this.cartService.findById(id);
     }
 
     @Post()
-    async create(@Body() createCartDto : CreateCartDto){
-      return this.cartService.create(createCartDto);
+    @UseGuards(AuthGuard())
+    async create(@Body() createCartDto: CreateCartDto, @GetUser() user: User) {
+        return this.cartService.create(createCartDto, user);
     }
 
     @Put()
-    async update(@Param("id") id: number , @Body() updateCartDto : UpdateCartDto){
-      return this.cartService.update(id,updateCartDto);
+    async update(@Param('id') id: number, @Body() updateCartDto: UpdateCartDto) {
+        return this.cartService.update(id, updateCartDto);
     }
 
-    @Delete("/:id")
-    async delete(@Param("id") id: number) {
-    return this.cartService.delete(id);
-  }
+    @Delete('/:id')
+    async delete(@Param('id') id: number) {
+        return this.cartService.delete(id);
+    }
 }
