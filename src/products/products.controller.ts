@@ -10,6 +10,7 @@ import {
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('products')
 export class ProductsController {
@@ -36,11 +37,21 @@ export class ProductsController {
   }
 
   @Post()
+  @ApiResponse({
+    status: 201,
+    description: 'Create product',
+    type: CreateProductDto,
+  })
   async create(@Body() createProductDto: CreateProductDto) {
     return this.productService.create(createProductDto);
   }
 
   @Put()
+  @ApiResponse({
+    status: 200,
+    description: 'Update product',
+    type: UpdateProductDto,
+  })
   async update(
     @Param('id') id: number,
     @Body() updateProductDto: UpdateProductDto,

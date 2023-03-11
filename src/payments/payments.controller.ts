@@ -7,6 +7,7 @@ import {
     Param,
     Delete,
 } from '@nestjs/common';
+import { ApiResponse } from '@nestjs/swagger';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { PaymentsService } from './payments.service';
@@ -23,6 +24,11 @@ export class PaymentsController {
         return this.PaymentService.findOne(id);
     }
     @Post()
+    @ApiResponse({
+        status: 201,
+        description: 'Create payment',
+        type: CreatePaymentDto,
+    })
     async create(@Body() createPaymentDto: CreatePaymentDto) {
         return this.PaymentService.create(createPaymentDto);
     }

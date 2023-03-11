@@ -14,6 +14,7 @@ import { CreateCartDto } from './dto/create-cart.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '@src/auth/get-user.decorator';
 import { User } from '@src/auth/user.entity';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('cart')
 export class CartController {
@@ -31,11 +32,22 @@ export class CartController {
 
     @Post()
     @UseGuards(AuthGuard())
+    @ApiResponse({
+        status: 201,
+        description: 'Create cart',
+        type: CreateCartDto,
+    })
     async create(@Body() createCartDto: CreateCartDto, @GetUser() user: User) {
         return this.cartService.create(createCartDto, user);
     }
 
     @Put()
+    @UseGuards(AuthGuard())
+    @ApiResponse({
+        status: 200,
+        description: 'Update cart',
+        type: UpdateCartDto,
+    })
     async update(@Param('id') id: number, @Body() updateCartDto: UpdateCartDto) {
         return this.cartService.update(id, updateCartDto);
     }

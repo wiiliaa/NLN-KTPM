@@ -9,6 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiResponse } from '@nestjs/swagger';
 import { GetUser } from '@src/auth/get-user.decorator';
 import { User } from '@src/auth/user.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -30,10 +31,20 @@ export class OrdersController {
 
   @Post()
   @UseGuards(AuthGuard())
+  @ApiResponse({
+    status: 201,
+    description: 'Create order',
+    type: CreateOrderDto,
+  })
   async create(@Body() createOrderDto: CreateOrderDto, @GetUser() user: User) {
     return this.ordersService.create(createOrderDto, user);
   }
   @Put('/:id')
+  @ApiResponse({
+    status: 200,
+    description: 'Update order',
+    type: UpdateOrderDto,
+  })
   async update(
     @Param('id') id: number,
     @Body() updateOrderDto: UpdateOrderDto,

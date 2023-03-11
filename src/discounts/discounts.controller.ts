@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { ApiResponse } from '@nestjs/swagger';
 import { GetUser } from '@src/auth/get-user.decorator';
 import { User } from '@src/auth/user.entity';
 import { DiscountsService } from './discounts.service';
@@ -18,6 +19,11 @@ export class DiscountsController {
   }
 
   @Post('/')
+  @ApiResponse({
+    status: 201,
+    description: 'Create discount',
+    type: CreateDiscountDto,
+  })
   async create(
     @Body() createDiscountDto: CreateDiscountDto,
     @GetUser() user: User,

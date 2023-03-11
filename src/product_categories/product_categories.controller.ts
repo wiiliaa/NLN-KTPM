@@ -1,12 +1,13 @@
-import { Controller } from "@nestjs/common";
-import { Body, Delete, Get, Param, Post, Put } from "@nestjs/common/decorators";
-import { CreateCategoryDto } from "./dto/create-category.dto";
-import { UpdateCategoryDto } from "./dto/update-category.dto";
-import { ProductCategoriesService } from "./product_categories.service";
+import { Controller } from '@nestjs/common';
+import { Body, Delete, Get, Param, Post, Put } from '@nestjs/common/decorators';
+import { ApiResponse } from '@nestjs/swagger';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
+import { ProductCategoriesService } from './product_categories.service';
 
-@Controller("product-categories")
+@Controller('product-categories')
 export class ProductCategoriesController {
-  constructor(private productCategoriesService: ProductCategoriesService) {}
+  constructor(private productCategoriesService: ProductCategoriesService) { }
 
   @Get()
   async find() {
@@ -14,12 +15,20 @@ export class ProductCategoriesController {
   }
 
   @Post()
+  @ApiResponse({
+    status: 201,
+    description: 'Create product category',
+    type: CreateCategoryDto,
+  })
   async create(@Body() createCategory: CreateCategoryDto) {
     return this.productCategoriesService.create(createCategory);
   }
 
   @Put('/:id')
-  async update(@Param('id') id: number, @Body() updateCategory : UpdateCategoryDto) {
+  async update(
+    @Param('id') id: number,
+    @Body() updateCategory: UpdateCategoryDto,
+  ) {
     this.productCategoriesService.update(id, updateCategory);
   }
 

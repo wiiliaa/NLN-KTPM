@@ -7,6 +7,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiResponse } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthCredentials } from './dto/auth-credentials.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,11 +19,21 @@ export class AuthController {
   constructor(private authService: AuthService) { }
 
   @Post('/login')
+  @ApiResponse({
+    status: 200,
+    description: 'Login',
+    type: AuthCredentials,
+  })
   async login(@Body() authCredentials: AuthCredentials) {
     return this.authService.signIn(authCredentials);
   }
 
   @Post('/signup')
+  @ApiResponse({
+    status: 201,
+    description: 'Sign up',
+    type: CreateUserDto,
+  })
   async signUp(@Body(ValidationPipe) createUserDto: CreateUserDto) {
     return this.authService.signUp(createUserDto);
   }
