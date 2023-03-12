@@ -24,10 +24,15 @@ export class ProductsController {
     });
     return result;
   }
-
-  @Get('/:slug')
+  @Get('/slug/:slug')
   async findSlug(@Param('slug') slug: string) {
     const product = await this.productService.findBySlug(slug);
+    return this.productService.parseToResult(product);
+  }
+
+  @Get('/id/:id')
+  async findOne(@Param('id') id: number) {
+    const product = await this.productService.findById(id);
     return this.productService.parseToResult(product);
   }
 
