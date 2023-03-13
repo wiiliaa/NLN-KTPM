@@ -11,7 +11,7 @@ export class CreateUserDto {
   fullname: string;
 
   @ApiProperty()
-  birthday: Date;
+  birthday: string;
 
   @ApiProperty()
   email: string;
