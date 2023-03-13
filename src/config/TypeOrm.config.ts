@@ -5,10 +5,10 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   host: '167.99.76.106',
   port: 5432,
 
-  username: "postgres",
-  password: "123456789zZ@x",
-  database: "nhom10_test",
-  entities: [__dirname + "/../**/*.entity.{js,ts}"],
+  username: 'postgres',
+  password: '123456789zZ@x',
+  database: 'nhom10_test',
+  entities: [__dirname + '/../**/*.entity.{js,ts}'],
 
   // username: 'postgres',
   // password: '123456789zZ@x',

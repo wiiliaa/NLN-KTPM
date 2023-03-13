@@ -28,7 +28,7 @@ export class Product extends BaseEntity {
   @Column()
   slug: string;
 
-  @Column()
+  @Column({ default: 1, nullable: true })
   qty: number;
 
   @Column({ type: 'float' })

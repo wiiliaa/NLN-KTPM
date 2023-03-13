@@ -6,23 +6,21 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiResponse } from '@nestjs/swagger';
+import { FilterProductDto } from './dto/filter-product.dto';
 
 @Controller('products')
 export class ProductsController {
   constructor(private productService: ProductsService) { }
 
   @Get()
-  async find() {
-    const products = await this.productService.find();
-    const result = products.map((product) => {
-      return this.productService.parseToResult(product);
-    });
-    return result;
+  async find(@Query() filterProductDto: FilterProductDto) {
+    return this.productService.find(filterProductDto);
   }
   @Get('/slug/:slug')
   async findSlug(@Param('slug') slug: string) {

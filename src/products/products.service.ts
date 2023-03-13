@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './products.entity';
 import { Repository } from 'typeorm';
@@ -7,14 +11,29 @@ import { UpdateProductDto } from './dto/update-product.dto';
 
 import slugify from 'slugify';
 import { IProductResult } from './interface/productResult.inteface';
+import { FilterProductDto } from './dto/filter-product.dto';
 
 @Injectable()
 export class ProductsService {
+  private logger = new Logger(ProductsService.name);
   constructor(
     @InjectRepository(Product) private productRepository: Repository<Product>,
   ) { }
 
+  search(filterProductDto: FilterProductDto): Promise<[Product[], number]> {
+    const { page, limit, text, skip } = filterProductDto;
+    const query = this.productRepository
+      .createQueryBuilder('Product')
+      .where('Product.name like :name', { name: `%${text}%` })
+      .skip(page * limit + skip)
+      .take(limit);
+    return query.getManyAndCount();
+  }
+
   parseToResult(product: Product): IProductResult {
+    if (!product) {
+      return null;
+    }
     let result: IProductResult = {
       product_id: product.id,
       sku: product.slug,
@@ -70,8 +89,31 @@ export class ProductsService {
     return result;
   }
 
-  async find() {
-    return this.productRepository.find();
+  async find(
+    filterProductDto: FilterProductDto,
+  ): Promise<{ products: IProductResult[]; total: number }> {
+    let total: number;
+    let results: IProductResult[];
+    this.logger.verbose(JSON.stringify(filterProductDto));
+    if (filterProductDto?.text) {
+      let [products, count] = await this.search(filterProductDto);
+      results = products.map((product) => this.parseToResult(product));
+      total = count;
+    } else {
+      let [products, count] = await this.productRepository
+        .createQueryBuilder()
+        .innerJoinAndSelect('Product.productCategory', 'productCategory')
+        .innerJoinAndSelect('Product.productMetas', 'productMetas')
+        .getManyAndCount();
+
+      this.logger.verbose(JSON.stringify(products));
+      results = products.map((product) => this.parseToResult(product));
+      total = count;
+    }
+    return {
+      total,
+      products: results,
+    };
   }
 
   async findById(id: number) {
