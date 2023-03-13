@@ -20,7 +20,10 @@ export class Cart extends BaseEntity {
     @Column()
     total: number;
 
-    @OneToMany(() => CartItems, (cartItem) => cartItem.cart)
+    @OneToMany(() => CartItems, (cartItem) => cartItem.cart, {
+        cascade: true,
+        eager: true,
+    })
     cartItems: CartItems[];
 
     @OneToOne(() => User)

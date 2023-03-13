@@ -25,8 +25,8 @@ export class ProductsService {
     const query = this.productRepository
       .createQueryBuilder('Product')
       .where('Product.name like :name', { name: `%${text}%` })
-      .skip(page * limit + skip)
-      .take(limit);
+      .innerJoinAndSelect('Product.productCategory', 'productCategory')
+      .innerJoinAndSelect('Product.productMetas', 'productMetas');
     return query.getManyAndCount();
   }
 
