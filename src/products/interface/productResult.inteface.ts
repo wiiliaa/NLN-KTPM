@@ -1,5 +1,6 @@
 export interface IProductResult {
   product_id: number;
+  description: string;
   sku: string;
   title: string;
   url_key: string;

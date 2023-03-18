@@ -36,6 +36,7 @@ export class ProductsService {
     }
     let result: IProductResult = {
       product_id: product.id,
+      description: product.description,
       sku: product.slug,
       title: product.name,
       url_key: product.slug,
