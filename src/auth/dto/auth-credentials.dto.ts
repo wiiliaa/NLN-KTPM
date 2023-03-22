@@ -4,11 +4,15 @@ import { IsString, MinLength } from 'class-validator';
 export class AuthCredentials {
     @IsString()
     @MinLength(4)
-    @ApiProperty()
+    @ApiProperty({
+        default: 'datbro',
+    })
     username: string;
 
     @IsString()
     @MinLength(6)
-    @ApiProperty()
+    @ApiProperty({
+        default: '123123',
+    })
     password: string;
 }

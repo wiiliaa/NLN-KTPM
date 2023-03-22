@@ -16,6 +16,16 @@ export class CartService {
         return this.cartsRepository.find();
     }
 
+    async findOne(user: User) {
+        return this.cartsRepository.findOne({
+            where: {
+                user: {
+                    id: user.id,
+                },
+            },
+        });
+    }
+
     async findById(id: number) {
         const found = await this.cartsRepository.findOne({ where: { id } });
         if (!found) {

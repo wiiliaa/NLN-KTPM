@@ -14,24 +14,22 @@ import { CreateCartDto } from './dto/create-cart.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '@src/auth/get-user.decorator';
 import { User } from '@src/auth/user.entity';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 
 @Controller('cart')
 export class CartController {
     constructor(private cartService: CartService) { }
 
     @Get()
-    async find() {
-        return this.cartService.find();
-    }
-
-    @Get('/id/:id')
-    async findByName(@Param('id') id: number) {
-        return this.cartService.findById(id);
+    @UseGuards(AuthGuard())
+    @ApiBearerAuth()
+    async findOne(@GetUser() user: User) {
+        return this.cartService.findOne(user);
     }
 
     @Post()
     @UseGuards(AuthGuard())
+    @ApiBearerAuth()
     @ApiResponse({
         status: 201,
         description: 'Create cart',
@@ -43,6 +41,7 @@ export class CartController {
 
     @Put()
     @UseGuards(AuthGuard())
+    @ApiBearerAuth()
     @ApiResponse({
         status: 200,
         description: 'Update cart',

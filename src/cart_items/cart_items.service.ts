@@ -1,5 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '@src/auth/user.entity';
 import { Repository } from 'typeorm';
 import { CartItems } from './cart_item.entity';
 import { CreateCartItemDto } from './dto/create-cart_item.dto';
@@ -12,8 +13,14 @@ export class CartItemsService {
         private cartItemsRepository: Repository<CartItems>,
     ) { }
 
-    find() {
-        return this.cartItemsRepository.find();
+    findOne(user: User) {
+        return this.cartItemsRepository.findOne({
+            where: {
+                user: {
+                    id: user.id,
+                },
+            },
+        });
     }
 
     async findById(id: number) {
@@ -24,11 +31,31 @@ export class CartItemsService {
         return found;
     }
 
-    async create(createCartItemDto: CreateCartItemDto): Promise<CartItems> {
-        const { qty } = createCartItemDto;
+    async push(createCartItemDto: CreateCartItemDto, user: User) {
+        const cart = await this.findOne(user);
+        const { product } = createCartItemDto;
+        if (cart.hasId()) {
+            const qty = cart.qty + createCartItemDto.qty;
+            const updateCartItemDto: UpdateCartItemDto = {
+                qty,
+                product,
+            };
+            return this.update(cart.id, updateCartItemDto);
+        } else {
+            return this.create(createCartItemDto, user);
+        }
+    }
+
+    async create(
+        createCartItemDto: CreateCartItemDto,
+        user: User,
+    ): Promise<CartItems> {
+        const { qty, product } = createCartItemDto;
         const cartItems = new CartItems();
 
         cartItems.qty = qty;
+        cartItems.user = user;
+        cartItems.product = product;
 
         await cartItems.save();
         return cartItems;
