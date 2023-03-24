@@ -10,6 +10,10 @@ export class ProductCategoriesController {
   constructor(private productCategoriesService: ProductCategoriesService) { }
 
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: 'Get all product categories',
+  })
   async find() {
     return this.productCategoriesService.find();
   }

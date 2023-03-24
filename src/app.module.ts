@@ -18,7 +18,7 @@ import { CartsModule } from './carts/carts.module';
 import { CartItemsModule } from './cart_items/cart_items.module';
 import { ProductGroupsModule } from './product_groups/product_groups.module';
 import { UsersModule } from './users/users.module';
-import { LocationModule } from './location/location.module';
+import { LocationModule } from './location/location.module;
 
 @Module({
   controllers: [AppController],
@@ -41,7 +41,7 @@ import { LocationModule } from './location/location.module';
     PaymentsModule,
     OrdersModule,
     StatusModule,
-    LocationModule,
+    LocationModul,
 
   ],
 })

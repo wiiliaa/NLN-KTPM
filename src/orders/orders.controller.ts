@@ -30,7 +30,6 @@ export class OrdersController {
   }
 
   @Post()
-  @UseGuards(AuthGuard())
   @ApiResponse({
     status: 201,
     description: 'Create order',
