@@ -68,6 +68,7 @@ export class Product extends BaseEntity {
 
   @OneToMany(() => ProductMeta, (productmeta) => productmeta.product, {
     eager: true,
+    cascade: true,
   })
   productMetas: ProductMeta[];
 

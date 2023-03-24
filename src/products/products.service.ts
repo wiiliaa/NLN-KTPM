@@ -12,12 +12,15 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import slugify from 'slugify';
 import { IProductResult } from './interface/productResult.inteface';
 import { FilterProductDto } from './dto/filter-product.dto';
+import { ProductMetasService } from '@src/product_metas/product_metas.service';
+import { CreateMetatDto } from '@src/product_metas/dto/create-meta.dto';
 
 @Injectable()
 export class ProductsService {
   private logger = new Logger(ProductsService.name);
   constructor(
     @InjectRepository(Product) private productRepository: Repository<Product>,
+    private productMetaService: ProductMetasService,
   ) { }
 
   search(filterProductDto: FilterProductDto): Promise<[Product[], number]> {
@@ -146,7 +149,8 @@ export class ProductsService {
   }
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const { name, price, weight, description, image } = createProductDto;
+    const { name, price, weight, description, image, productMetas } =
+      createProductDto;
     const slug = slugify(name);
     const product = new Product();
     product.name = name;
@@ -156,6 +160,16 @@ export class ProductsService {
     product.description = description;
     product.image = image;
     await product.save();
+    if (productMetas) {
+      for (const productMeta of productMetas) {
+        let createMetaDto: CreateMetatDto = {
+          name: productMeta.name,
+          value: productMeta.value,
+          product,
+        };
+        await this.productMetaService.create(createMetaDto);
+      }
+    }
     return product;
   }
 

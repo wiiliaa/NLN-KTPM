@@ -1,16 +1,16 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { CreateMetatDto } from "./dto/create-meta.dto";
-import { UpdateMetaDto } from "./dto/update-meta.dto";
-import { ProductMeta } from "./product-metas.entity";
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateMetatDto } from './dto/create-meta.dto';
+import { UpdateMetaDto } from './dto/update-meta.dto';
+import { ProductMeta } from './product-metas.entity';
 
 @Injectable()
 export class ProductMetasService {
   constructor(
     @InjectRepository(ProductMeta)
-    private ProductMetaRepository: Repository<ProductMeta>
-  ) {}
+    private ProductMetaRepository: Repository<ProductMeta>,
+  ) { }
 
   find() {
     return this.ProductMetaRepository.find();
@@ -25,11 +25,12 @@ export class ProductMetasService {
   }
 
   async create(createMetaDto: CreateMetatDto) {
-    const { name, value } = createMetaDto;
+    const { name, value, product } = createMetaDto;
     const meta = new ProductMeta();
 
     meta.name = name;
     meta.value = value;
+    meta.product = product;
 
     await meta.save();
 

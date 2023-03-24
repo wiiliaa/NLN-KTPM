@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ProductMeta } from '@src/product_metas/product-metas.entity';
 
 export class CreateProductDto {
   @ApiProperty()
@@ -21,4 +22,6 @@ export class CreateProductDto {
 
   @ApiProperty()
   image: string;
+
+  productMetas: ProductMeta[];
 }
