@@ -10,6 +10,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -64,7 +65,11 @@ export class Product extends BaseEntity {
       eager: true,
     },
   )
+  @JoinColumn({ name: 'category_id' })
   productCategory: ProductCategory;
+
+  @Column({ nullable: true })
+  category_id: number;
 
   @OneToMany(() => ProductMeta, (productmeta) => productmeta.product, {
     eager: true,

@@ -7,12 +7,18 @@ import {
   Post,
   Put,
   Query,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FilterProductDto } from './dto/filter-product.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { createWriteStream } from 'fs';
+import * as appRootPath from 'app-root-path';
+import { join } from 'path';
 
 @ApiTags('Product')
 @Controller('products')
@@ -21,7 +27,7 @@ export class ProductsController {
 
   @Get()
   async find(@Query() filterProductDto: FilterProductDto) {
-    return this.productService.find(filterProductDto);
+    return this.productService.findAll();
   }
   @Get('/slug/:slug')
   async findSlug(@Param('slug') slug: string) {
@@ -46,7 +52,27 @@ export class ProductsController {
     description: 'Create product',
     type: CreateProductDto,
   })
-  async create(@Body() createProductDto: CreateProductDto) {
+  @UseInterceptors(FileInterceptor('image'))
+  async create(
+    @Body() createProductDto: CreateProductDto,
+    @UploadedFile() image: Express.Multer.File,
+  ) {
+    // save the image file to the server
+    const filename = `${Date.now()}.jpg`;
+    const path = `${appRootPath}/uploads/${filename}`;
+    const fileStream = createWriteStream(path);
+    fileStream.write(image.buffer);
+    createProductDto.image = `/uploads/${filename}`;
+
+    const { meta_name, meta_value } = createProductDto;
+    createProductDto.productMetas = [];
+    meta_name.forEach((name, index) => {
+      createProductDto.productMetas.push({
+        name,
+        value: meta_value[index],
+      });
+    });
+
     return this.productService.create(createProductDto);
   }
 

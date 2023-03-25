@@ -25,12 +25,12 @@ export class ProductMetasService {
   }
 
   async create(createMetaDto: CreateMetatDto) {
-    const { name, value, product } = createMetaDto;
+    const { name, value, productId } = createMetaDto;
     const meta = new ProductMeta();
 
     meta.name = name;
     meta.value = value;
-    meta.product = product;
+    meta.product_id = productId;
 
     await meta.save();
 

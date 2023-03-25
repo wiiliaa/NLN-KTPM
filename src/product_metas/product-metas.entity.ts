@@ -5,6 +5,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -22,7 +23,11 @@ export class ProductMeta extends BaseEntity {
   value: string;
 
   @ManyToOne(() => Product, (product) => product.productMetas)
+  @JoinColumn({ name: 'product_id' })
   product: Product;
+
+  @Column()
+  product_id: number;
 
   @CreateDateColumn({
     type: 'timestamp',

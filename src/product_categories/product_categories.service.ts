@@ -15,9 +15,7 @@ export class ProductCategoriesService {
   ) { }
 
   find() {
-    return this.productCategoryRepository.find({
-      relations: ['parent'],
-    });
+    return this.productCategoryRepository.find();
   }
 
   async findById(id: number) {

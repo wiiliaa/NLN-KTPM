@@ -23,5 +23,19 @@ export class CreateProductDto {
   @ApiProperty()
   image: string;
 
-  productMetas: ProductMeta[];
+  productMetas: IMeta[];
+
+  @ApiProperty()
+  meta_name: string[];
+
+  @ApiProperty()
+  meta_value: string[];
+
+  @ApiProperty()
+  categoryId: number;
+}
+
+interface IMeta {
+  name: string;
+  value: string;
 }

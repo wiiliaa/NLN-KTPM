@@ -93,32 +93,36 @@ export class ProductsService {
     return result;
   }
 
-  async find(
-    filterProductDto: FilterProductDto,
-  ): Promise<{ products: IProductResult[]; total: number }> {
-    let total: number;
-    let results: IProductResult[];
-    this.logger.verbose(JSON.stringify(filterProductDto));
-    if (filterProductDto?.text) {
-      let [products, count] = await this.search(filterProductDto);
-      results = products.map((product) => this.parseToResult(product));
-      total = count;
-    } else {
-      let [products, count] = await this.productRepository
-        .createQueryBuilder()
-        .innerJoinAndSelect('Product.productCategory', 'productCategory')
-        .innerJoinAndSelect('Product.productMetas', 'productMetas')
-        .getManyAndCount();
-
-      this.logger.verbose(JSON.stringify(products));
-      results = products.map((product) => this.parseToResult(product));
-      total = count;
-    }
-    return {
-      total,
-      products: results,
-    };
+  async findAll(): Promise<Product[]> {
+    return await this.productRepository.find();
   }
+
+  // async find(
+  //   filterProductDto: FilterProductDto,
+  // ): Promise<{ products: IProductResult[]; total: number }> {
+  //   let total: number;
+  //   let results: IProductResult[];
+  //   this.logger.verbose(JSON.stringify(filterProductDto));
+  //   if (filterProductDto?.text) {
+  //     let [products, count] = await this.search(filterProductDto);
+  //     results = products.map((product) => this.parseToResult(product));
+  //     total = count;
+  //   } else {
+  //     let [products, count] = await this.productRepository
+  //       .createQueryBuilder()
+  //       .innerJoinAndSelect('Product.productCategory', 'productCategory')
+  //       .innerJoinAndSelect('Product.productMetas', 'productMetas')
+  //       .getManyAndCount();
+  //
+  //     this.logger.verbose(JSON.stringify(products));
+  //     results = products.map((product) => this.parseToResult(product));
+  //     total = count;
+  //   }
+  //   return {
+  //     total,
+  //     products: results,
+  //   };
+  // }
 
   async findById(id: number) {
     const found = await this.productRepository.findOne({ where: { id } });
@@ -149,8 +153,16 @@ export class ProductsService {
   }
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const { name, price, weight, description, image, productMetas } =
-      createProductDto;
+    console.log(createProductDto);
+    const {
+      name,
+      price,
+      weight,
+      description,
+      image,
+      productMetas,
+      categoryId,
+    } = createProductDto;
     const slug = slugify(name);
     const product = new Product();
     product.name = name;
@@ -159,13 +171,14 @@ export class ProductsService {
     product.weight = weight;
     product.description = description;
     product.image = image;
+    product.category_id = categoryId;
     await product.save();
     if (productMetas) {
       for (const productMeta of productMetas) {
         let createMetaDto: CreateMetatDto = {
           name: productMeta.name,
           value: productMeta.value,
-          product,
+          productId: product.id,
         };
         await this.productMetaService.create(createMetaDto);
       }
