@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -23,13 +24,17 @@ export class ProductCategory extends BaseEntity {
   @Column()
   description: string;
 
-  @OneToOne(() => Product, (product) => product.productCategory)
-  product: Product;
+  @OneToMany(() => Product, (product) => product.productCategory)
+  products: Product[];
 
   @Column({ nullable: true })
   parent_id: number;
 
+  @OneToOne(() => ProductCategory)
   parent: ProductCategory;
+
+  @OneToMany(() => ProductCategory, (productCategory) => productCategory.parent)
+  children: ProductCategory[];
 
   @CreateDateColumn({
     type: 'timestamp',

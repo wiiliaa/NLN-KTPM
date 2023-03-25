@@ -11,6 +11,7 @@ import { OrdersModule } from './orders/orders.module';
 import { PaymentsModule } from './payments/payments.module';
 import { PaymentOrdersModule } from './payment_orders/payment_orders.module';
 import { ProductsModule } from './products/products.module';
+import { ProductCategoriesModule } from './product_categories/product_categories.module';
 import { ProductMetasModule } from './product_metas/product_metas.module';
 import { RolesModule } from './roles/roles.module';
 import { StatusModule } from './status/status.module';
@@ -24,6 +25,7 @@ import { UsersModule } from './users/users.module';
     TypeOrmModule.forRoot(typeOrmConfig),
     ProductMetasModule,
     ProductsModule,
+    ProductCategoriesModule,
     FilesModule,
     RolesModule,
     DiscountsModule,

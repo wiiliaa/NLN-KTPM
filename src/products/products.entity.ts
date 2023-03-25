@@ -59,7 +59,7 @@ export class Product extends BaseEntity {
 
   @ManyToOne(
     () => ProductCategory,
-    (productcategory) => productcategory.product,
+    (productcategory) => productcategory.products,
     {
       eager: true,
     },

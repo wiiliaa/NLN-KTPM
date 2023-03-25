@@ -1,25 +1,36 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { ProductCategory } from "./product_categories.entity";
-import { Repository } from "typeorm";
-import { UpdateCategoryDto } from "./dto/update-category.dto";
-import Slug from "limax";
-import { CreateCategoryDto } from "./dto/create-category.dto";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ProductCategory } from './product_categories.entity';
+import { Repository } from 'typeorm';
+import { UpdateCategoryDto } from './dto/update-category.dto';
+import Slug from 'limax';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { slugifyVietnamese } from '@src/common/utils/slug';
 
 @Injectable()
 export class ProductCategoriesService {
   constructor(
     @InjectRepository(ProductCategory)
-    private ProductCategoryRepository: Repository<ProductCategory>
-  ) {}
+    private productCategoryRepository: Repository<ProductCategory>,
+  ) { }
 
   find() {
-    return this.ProductCategoryRepository.find();
+    return this.productCategoryRepository.find({
+      relations: ['parent'],
+    });
   }
 
   async findById(id: number) {
-    const found = await this.ProductCategoryRepository.findOne({
+    const found = await this.productCategoryRepository.findOne({
       where: { id },
+    });
+    if (found?.parent_id) {
+      found.parent = await this.findById(found.parent_id);
+    }
+    found.children = await this.productCategoryRepository.find({
+      where: {
+        parent_id: found.id,
+      },
     });
     return found;
   }
@@ -43,13 +54,14 @@ export class ProductCategoriesService {
   }
 
   async create(createCategoryDto: CreateCategoryDto): Promise<ProductCategory> {
-    const { name, description } = createCategoryDto;
-    const slug = Slug(name);
+    const { name, description, parentId } = createCategoryDto;
+    const slug = slugifyVietnamese(name);
     const productcategory = new ProductCategory();
 
     productcategory.name = name;
     productcategory.slug = slug;
     productcategory.description = description;
+    productcategory.parent_id = parentId;
 
     await productcategory.save();
 
@@ -58,7 +70,7 @@ export class ProductCategoriesService {
 
   async delete(id: number) {
     let status = true;
-    const target = await this.ProductCategoryRepository.delete(id);
+    const target = await this.productCategoryRepository.delete(id);
     if (!target) {
       status = false;
     }
