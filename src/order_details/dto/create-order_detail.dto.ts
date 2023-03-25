@@ -1,7 +1,12 @@
-import { Product } from '@src/products/products.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateOrderDetailDto {
+  @ApiProperty()
   note: string;
+  @ApiProperty()
   qty: number;
-  product: Product;
+  @ApiProperty()
+  productId: number;
+  @ApiProperty()
+  orderId: number;
 }

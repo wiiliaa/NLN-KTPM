@@ -1,12 +1,9 @@
-/* eslint-disable prettier/prettier */
-import { ProductGroup } from '@src/product_groups/product_group.entity';
 import { Product } from '@src/products/products.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -29,8 +26,10 @@ export class ProductCategory extends BaseEntity {
   @OneToOne(() => Product, (product) => product.productCategory)
   product: Product;
 
-  @ManyToOne(() => ProductGroup, (productGroup) => productGroup.productCategory)
-  productGroup: ProductGroup;
+  @Column({ nullable: true })
+  parent_id: number;
+
+  parent: ProductCategory;
 
   @CreateDateColumn({
     type: 'timestamp',

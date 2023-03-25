@@ -1,22 +1,20 @@
-import { IsDate, IsNumber, IsString } from 'class-validator';
-import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsString } from 'class-validator';
 
 export class CreateDiscountDto {
+  @ApiProperty()
   @IsString()
   coupon: string;
 
+  @ApiProperty()
   @IsNumber()
   limit: number;
 
+  @ApiProperty()
   @IsNumber()
   percent: number;
 
-  @IsDate()
-  start: Date;
-
-  @IsDate()
-  end: Date;
-
+  @ApiProperty()
   @IsString()
   note: string;
 }

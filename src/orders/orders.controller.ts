@@ -9,12 +9,14 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetUser } from '@src/auth/get-user.decorator';
 import { User } from '@src/auth/user.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrdersService } from './orders.service';
+
+@ApiTags('Order')
 @Controller('orders')
 export class OrdersController {
   constructor(private ordersService: OrdersService) { }

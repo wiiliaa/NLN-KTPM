@@ -3,8 +3,13 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreatePaymentOrderDto {
     @ApiProperty()
     amount: number;
+
     @ApiProperty()
-    date: Date;
+    payId: string;
+
     @ApiProperty()
-    pay_id: string;
+    orderId: number;
+
+    @ApiProperty()
+    statusId: number;
 }

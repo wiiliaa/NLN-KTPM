@@ -14,8 +14,9 @@ import { CreateCartDto } from './dto/create-cart.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '@src/auth/get-user.decorator';
 import { User } from '@src/auth/user.entity';
-import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Cart')
 @Controller('cart')
 export class CartController {
     constructor(private cartService: CartService) { }

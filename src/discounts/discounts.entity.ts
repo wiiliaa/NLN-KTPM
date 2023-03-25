@@ -23,14 +23,8 @@ export class Discount extends BaseEntity {
   @Column()
   limit: number;
 
-  @Column({ type: 'float' })
+  @Column({ type: 'float', default: 0 })
   percent: number;
-
-  @Column()
-  start: Date;
-
-  @Column()
-  end: Date;
 
   @Column()
   note: string;

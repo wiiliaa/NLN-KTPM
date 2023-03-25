@@ -7,10 +7,12 @@ import {
     Param,
     Delete,
 } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { PaymentsService } from './payments.service';
+
+@ApiTags('Payment')
 @Controller('payments')
 export class PaymentsController {
     constructor(private PaymentService: PaymentsService) { }

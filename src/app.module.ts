@@ -9,16 +9,13 @@ import { DiscountsModule } from './discounts/discounts.module';
 import { FilesModule } from './files/files.module';
 import { OrdersModule } from './orders/orders.module';
 import { PaymentsModule } from './payments/payments.module';
+import { PaymentOrdersModule } from './payment_orders/payment_orders.module';
 import { ProductsModule } from './products/products.module';
 import { ProductMetasModule } from './product_metas/product_metas.module';
 import { RolesModule } from './roles/roles.module';
 import { StatusModule } from './status/status.module';
 import { TransportsModule } from './transports/transports.module';
-import { CartsModule } from './carts/carts.module';
-import { CartItemsModule } from './cart_items/cart_items.module';
-import { ProductGroupsModule } from './product_groups/product_groups.module';
 import { UsersModule } from './users/users.module';
-import { LocationModule } from './location/location.module;
 
 @Module({
   controllers: [AppController],
@@ -34,15 +31,11 @@ import { LocationModule } from './location/location.module;
     AuthModule,
     CommentsModule,
     OrdersModule,
-    CartsModule,
-    CartItemsModule,
-    ProductGroupsModule,
     UsersModule,
     PaymentsModule,
+    PaymentOrdersModule,
     OrdersModule,
     StatusModule,
-    LocationModul,
-
   ],
 })
 export class AppModule { }

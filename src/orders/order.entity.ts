@@ -7,8 +7,8 @@ import {
     UpdateDateColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
-    OneToOne,
     JoinColumn,
+    OneToOne,
 } from 'typeorm';
 import { OrderDetail } from 'src/order_details/order_details.entity';
 import { Payment } from 'src/payments/payments.entity';
@@ -36,25 +36,26 @@ export class Order extends BaseEntity {
     @ManyToOne(() => Discount, (discount) => discount.orders, {
         eager: true,
     })
-    @JoinColumn()
+    @JoinColumn({ name: 'discount_id' })
     discount: Discount;
 
+    @Column({ nullable: true })
+    discount_id: number;
+
     @ManyToOne(() => Payment, (payment) => payment.orders, {
-        cascade: true,
         eager: true,
     })
+    @JoinColumn({ name: 'payment_id' })
     payment: Payment;
 
-    @OneToOne(() => PaymentOrder, {
-        cascade: true,
-        eager: true,
-    })
-    @JoinColumn()
+    @Column({ nullable: true })
+    payment_id: number;
+
+    @OneToOne(() => PaymentOrder)
     paymentOrder: PaymentOrder;
 
     @ManyToOne(() => User, (user) => user.orders, {
         eager: true,
-        cascade: true,
     })
     user: User;
 

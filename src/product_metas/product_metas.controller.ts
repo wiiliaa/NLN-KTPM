@@ -10,8 +10,9 @@ import {
 import { ProductMetasService } from './product_metas.service';
 import { CreateMetatDto } from './dto/create-meta.dto';
 import { UpdateMetaDto } from './dto/update-meta.dto';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('ProductMeta')
 @Controller('product-metas')
 export class ProductMetasController {
   constructor(private productMetaService: ProductMetasService) { }

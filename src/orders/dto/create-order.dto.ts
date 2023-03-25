@@ -1,8 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Discount } from '@src/discounts/discounts.entity';
-import { OrderDetail } from '@src/order_details/order_details.entity';
-import { Payment } from '@src/payments/payments.entity';
-import { PaymentOrder } from '@src/payment_orders/payment_orders.entity';
+import { CreateOrderDetailDto } from '@src/order_details/dto/create-order_detail.dto';
 
 export class CreateOrderDto {
   @ApiProperty()
@@ -19,37 +16,31 @@ export class CreateOrderDto {
     default: 1,
     description: 'Discount ID',
   })
-  discount: Discount;
+  discountId: number;
 
   @ApiProperty({
     default: 1,
     description: 'payment ID',
   })
-  payment: Payment;
+  paymentId: number;
 
   @ApiProperty({
-    default: 1,
-    description: 'payment order ID',
-  })
-  paymentOrder: PaymentOrder;
-
-  @ApiProperty({
-    type: [OrderDetail],
+    type: [CreateOrderDetailDto],
     description: 'array object order detail',
     default: [
       {
         qty: 231,
-        product: 1,
+        productId: 1,
       },
       {
         qty: 2,
-        product: 2,
+        productId: 2,
       },
       {
         qty: 512,
-        product: 4,
+        productId: 4,
       },
     ],
   })
-  orderDetails: OrderDetail[];
+  orderDetails: CreateOrderDetailDto[];
 }

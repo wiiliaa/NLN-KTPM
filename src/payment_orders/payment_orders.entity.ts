@@ -6,9 +6,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  JoinColumn,
+  OneToOne,
 } from 'typeorm';
 import { Status } from 'src/status/status.entity';
-import { Payment } from '@src/payments/payments.entity';
+import { Order } from '@src/orders/order.entity';
 
 @Entity()
 export class PaymentOrder extends BaseEntity {
@@ -30,8 +32,15 @@ export class PaymentOrder extends BaseEntity {
   @OneToMany(() => Status, (status) => status.paymentOrders)
   status: Status;
 
-  @OneToMany(() => Payment, (payment) => payment.paymentOrders)
-  payment: Payment;
+  @Column({ nullable: true })
+  status_id: number;
+
+  @OneToOne(() => Order)
+  @JoinColumn({ name: 'order_id' })
+  order: Order;
+
+  @Column()
+  order_id: number;
 
   @CreateDateColumn({
     type: 'timestamp',

@@ -9,12 +9,14 @@ import {
     Delete,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/auth/user.entity';
 import { CreateStatusDto } from './dto/create-status.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { StatusService } from './status.service';
+
+@ApiTags('Status')
 @Controller('status')
 export class StatusController {
     constructor(private statusService: StatusService) { }

@@ -20,19 +20,13 @@ export class OrderDetailsService {
         }
         return found;
     }
-    // async findByOrder(order: FindOptionsWhere<Order>){
-    //   const found = await this.orderDetailRepository.find({ where: { order: order } });
-    //     if (!found) {
-    //       throw new InternalServerErrorException(`Files:${order} non exist`);
-    //     }
-    //     return found;
-    // }
     async create(createOrderDto: CreateOrderDetailDto) {
-        const { qty, note, product } = createOrderDto;
+        const { qty, note, productId, orderId } = createOrderDto;
         const orderDetail = new OrderDetail();
         orderDetail.note = note;
         orderDetail.qty = qty;
-        orderDetail.product = product;
+        orderDetail.product_id = productId;
+        orderDetail.order_id = orderId;
         return await orderDetail.save();
     }
     async update(id: number, updateOrderDto: UpdateOrderDetailDto) {

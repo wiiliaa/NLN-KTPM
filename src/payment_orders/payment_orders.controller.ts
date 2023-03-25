@@ -1,8 +1,10 @@
 import { Controller, Get, Post, Put, Body, Param } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreatePaymentOrderDto } from './dto/create-payment_order.dto';
 import { UpdatePaymentOrderDto } from './dto/update-payment_order.dto';
 import { PaymentOrdersService } from './payment_orders.service';
+
+@ApiTags('Payment Order')
 @Controller('payment-orders')
 export class PaymentOrdersController {
     constructor(private PaymentOrdersService: PaymentOrdersService) { }

@@ -6,7 +6,6 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -32,11 +31,18 @@ export class OrderDetail extends BaseEntity {
   @ManyToOne(() => Product, (product) => product.orderDetails, {
     eager: true,
   })
-  @JoinColumn()
+  @JoinColumn({ name: 'product_id' })
   product: Product;
 
+  @Column({ nullable: true })
+  product_id: number;
+
   @ManyToOne(() => Order)
+  @JoinColumn({ name: 'order_id' })
   order: Order;
+
+  @Column()
+  order_id: number;
 
   @CreateDateColumn({
     type: 'timestamp',

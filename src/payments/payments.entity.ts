@@ -7,7 +7,6 @@ import {
     UpdateDateColumn,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { PaymentOrder } from 'src/payment_orders/payment_orders.entity';
 import { Order } from 'src/orders/order.entity';
 
 @Entity()
@@ -20,9 +19,6 @@ export class Payment extends BaseEntity {
 
     @Column()
     note: string;
-
-    @OneToMany(() => PaymentOrder, (paymentOrder) => paymentOrder.payment)
-    paymentOrders: PaymentOrder[];
 
     @OneToMany(() => Order, (payment) => payment.payment)
     orders: Order[];

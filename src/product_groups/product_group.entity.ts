@@ -1,8 +1,16 @@
-import { ProductCategory } from "@src/product_categories/product_categories.entity";
-import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { ProductCategory } from '@src/product_categories/product_categories.entity';
+import {
+    BaseEntity,
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
-export class ProductGroup extends BaseEntity{
+export class ProductGroup extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -10,20 +18,17 @@ export class ProductGroup extends BaseEntity{
     title: string;
 
     @Column()
-    type: string;  
+    type: string;
 
     @Column()
     track_inventory: boolean;
-
-    @OneToMany(()=> ProductCategory, (productCategory)=> productCategory.productGroup)
-    productCategory: ProductCategory[];
 
     @CreateDateColumn({
         type: 'timestamp',
         default: () => 'CURRENT_TIMESTAMP(6)',
     })
     public created_at: Date;
-    
+
     @UpdateDateColumn({
         type: 'timestamp',
         default: () => 'CURRENT_TIMESTAMP(6)',
