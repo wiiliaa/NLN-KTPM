@@ -17,7 +17,7 @@ export class PaymentOrder extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'float', nullable: true })
   amount: number;
 
   @CreateDateColumn({

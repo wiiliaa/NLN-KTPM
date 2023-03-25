@@ -11,5 +11,5 @@ export class CreatePaymentOrderDto {
     orderId: number;
 
     @ApiProperty()
-    statusId: number;
+    statusId?: number;
 }

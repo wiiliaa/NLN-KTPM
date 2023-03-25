@@ -12,14 +12,21 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetUser } from '@src/auth/get-user.decorator';
 import { User } from '@src/auth/user.entity';
+import { CreatePaymentOrderDto } from '@src/payment_orders/dto/create-payment_order.dto';
+import { PaymentOrdersService } from '@src/payment_orders/payment_orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrdersService } from './orders.service';
+import { MomoService } from './providers/momo.service';
 
 @ApiTags('Order')
 @Controller('orders')
 export class OrdersController {
-  constructor(private ordersService: OrdersService) { }
+  constructor(
+    private ordersService: OrdersService,
+    private paymentOrderService: PaymentOrdersService,
+    private momoService: MomoService,
+  ) { }
 
   @Get()
   async find() {
@@ -56,5 +63,27 @@ export class OrdersController {
   @Delete('/:id')
   async remove(@Param('id') id: number) {
     return this.ordersService.remove(id);
+  }
+
+  @Get('/:orderId/momo')
+  async payMomoTransaction(@Param('orderId') orderId: number) {
+    const data = this.momoService.paymentSuccess(orderId);
+    const order = await this.ordersService.findOne(orderId);
+    const createPaymentOrderDto: CreatePaymentOrderDto = {
+      orderId: order.id,
+      amount: order.total,
+      payId: data.payId,
+    };
+    const paymentOrder = await this.paymentOrderService.create(
+      createPaymentOrderDto,
+    );
+    return {
+      ...data,
+      ...paymentOrder,
+    };
+  }
+  @Get('/:orderId/momo/create')
+  async createMomoTransaction(@Param('orderId') orderId: number) {
+    return this.momoService.createTransaction(orderId);
   }
 }

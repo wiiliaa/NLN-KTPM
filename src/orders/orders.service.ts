@@ -27,7 +27,9 @@ export class OrdersService {
             .leftJoinAndSelect('order.discount', 'discount')
             .where('order.id = :id', { id })
             .getOne();
-        found.paymentOrder = await this.paymentOrderService.findOneByOrderId(id);
+        try {
+            found.paymentOrder = await this.paymentOrderService.findOneByOrderId(id);
+        } catch (err) { }
         return found;
     }
 
