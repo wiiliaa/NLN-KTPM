@@ -26,6 +26,9 @@ export class Discount extends BaseEntity {
   @Column({ type: 'float', default: 0 })
   percent: number;
 
+  @Column({ type: 'float', default: 0, nullable: true })
+  condition: number;
+
   @Column()
   note: string;
 

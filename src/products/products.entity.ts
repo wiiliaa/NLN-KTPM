@@ -39,6 +39,9 @@ export class Product extends BaseEntity {
   weight: number;
 
   @Column({ default: 0 })
+  stock: number;
+
+  @Column({ default: 0 })
   width: number;
 
   @Column({ default: 0 })

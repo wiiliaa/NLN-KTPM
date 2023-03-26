@@ -18,6 +18,9 @@ export class CreateProductDto {
   height: number;
 
   @ApiProperty()
+  stock: number;
+
+  @ApiProperty()
   description: string;
 
   @ApiProperty()

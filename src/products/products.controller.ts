@@ -27,7 +27,7 @@ export class ProductsController {
 
   @Get()
   async find(@Query() filterProductDto: FilterProductDto) {
-    return this.productService.findAll();
+    return this.productService.find(filterProductDto);
   }
   @Get('/slug/:slug')
   async findSlug(@Param('slug') slug: string) {

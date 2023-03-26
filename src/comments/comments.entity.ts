@@ -8,7 +8,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -26,22 +25,31 @@ export class Comment extends BaseEntity {
   rate: number;
 
   @OneToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
+  @Column()
+  user_id: number;
+
   @OneToOne(() => Status)
-  @JoinColumn()
+  @JoinColumn({ name: 'status_id' })
   status: Status;
 
+  @Column({ default: 1 })
+  status_id: number;
+
   @ManyToOne(() => Product, (product) => product.comments)
+  @JoinColumn({ name: 'product_id' })
   product: Product;
+
+  @Column()
+  product_id: number;
 
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
   public created_at: Date;
-
-  //
 
   @UpdateDateColumn({
     type: 'timestamp',

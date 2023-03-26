@@ -1,13 +1,14 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { Comment } from "./comments.entity";
-import { CreateCommentDto } from "./dto/create-comment.dto";
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '@src/auth/user.entity';
+import { Repository } from 'typeorm';
+import { Comment } from './comments.entity';
+import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Injectable()
 export class CommentsService {
   constructor(
-    @InjectRepository(Comment) private commentRepository: Repository<Comment>
+    @InjectRepository(Comment) private commentRepository: Repository<Comment>,
   ) { }
 
   async findOne(id: number): Promise<Comment> {
@@ -19,15 +20,18 @@ export class CommentsService {
     return found;
   }
 
-  async create(createCommentDto: CreateCommentDto): Promise<Comment> {
+  async create(
+    createCommentDto: CreateCommentDto,
+    user: User,
+  ): Promise<Comment> {
     // interface CreateCommentDto
-    let { text, rate, user, product } = createCommentDto;
+    let { text, rate, productId } = createCommentDto;
 
     let comment = new Comment();
     comment.text = text;
     comment.rate = rate;
-    comment.user = user;
-    comment.product = product;
+    comment.user_id = user.id;
+    comment.product_id = productId;
     await comment.save();
     return comment;
   }

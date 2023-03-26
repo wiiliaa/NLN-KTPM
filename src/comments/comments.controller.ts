@@ -1,5 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
+import { GetUser } from '@src/auth/get-user.decorator';
+import { User } from '@src/auth/user.entity';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 
@@ -19,8 +22,12 @@ export class CommentsController {
   }
 
   @Post()
-  async create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentsService.create(createCommentDto);
+  @UseGuards(AuthGuard())
+  async create(
+    @Body() createCommentDto: CreateCommentDto,
+    @GetUser() user: User,
+  ) {
+    return this.commentsService.create(createCommentDto, user);
   }
 
   /*
