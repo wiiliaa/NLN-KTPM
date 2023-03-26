@@ -44,8 +44,8 @@ export class OrdersController {
     description: 'Create order',
     type: CreateOrderDto,
   })
-  async create(@Body() createOrderDto: CreateOrderDto, @GetUser() user: User) {
-    return this.ordersService.create(createOrderDto, user);
+  async create(@Body() createOrderDto: CreateOrderDto) {
+    return this.ordersService.create(createOrderDto);
   }
   @Put('/:id')
   @ApiResponse({

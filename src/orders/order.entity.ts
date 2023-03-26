@@ -59,6 +59,9 @@ export class Order extends BaseEntity {
     })
     user: User;
 
+    @Column()
+    user_id: number;
+
     @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.order, {
         eager: true,
         cascade: true,

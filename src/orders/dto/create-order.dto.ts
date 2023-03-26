@@ -43,4 +43,10 @@ export class CreateOrderDto {
     ],
   })
   orderDetails: CreateOrderDetailDto[];
+
+  @ApiProperty({
+    default: 1,
+    description: 'user ID',
+  })
+  userId?: number;
 }

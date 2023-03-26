@@ -38,9 +38,16 @@ export class OrdersService {
         return await order.remove();
     }
 
-    async create(createOrderDto: CreateOrderDto, user: User) {
-        const { note, ordercode, tax, paymentId, discountId, orderDetails } =
-            createOrderDto;
+    async create(createOrderDto: CreateOrderDto) {
+        const {
+            note,
+            ordercode,
+            tax,
+            paymentId,
+            discountId,
+            orderDetails,
+            userId,
+        } = createOrderDto;
         const order = new Order();
         order.orderDetails = [];
         if (orderDetails.length == 0) {
@@ -52,7 +59,7 @@ export class OrdersService {
         order.tax = tax;
         order.discount_id = discountId;
         order.payment_id = paymentId;
-        order.user = user;
+        order.user_id = userId;
         await order.save();
         orderDetails.forEach(async (orderDetail) => {
             orderDetail.orderId = order.id;
