@@ -1,14 +1,14 @@
 import { Order } from '@src/orders/order.entity';
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
-  JoinColumn,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-export class Transport {
+export class Transportation extends BaseEntity {
   @PrimaryColumn()
   id: number;
 

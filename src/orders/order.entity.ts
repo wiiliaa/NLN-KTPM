@@ -15,6 +15,8 @@ import { Payment } from 'src/payments/payments.entity';
 import { User } from 'src/auth/user.entity';
 import { Discount } from '@src/discounts/discounts.entity';
 import { PaymentOrder } from '@src/payment_orders/payment_orders.entity';
+import { Transport } from '@src/transports/transports.entity';
+import { Transportation } from '@src/transportation/transportation.entity';
 
 @Entity()
 export class Order extends BaseEntity {

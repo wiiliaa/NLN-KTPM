@@ -20,7 +20,7 @@ export class Payment extends BaseEntity {
     @Column()
     note: string;
 
-    @OneToMany(() => Order, (payment) => payment.payment)
+    @OneToMany(() => Order, (order) => order.payment)
     orders: Order[];
 
     @CreateDateColumn({

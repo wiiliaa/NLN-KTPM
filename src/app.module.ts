@@ -40,4 +40,4 @@ import { UsersModule } from './users/users.module';
     StatusModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

@@ -14,8 +14,15 @@ export class ProductCategoriesService {
     private productCategoryRepository: Repository<ProductCategory>,
   ) { }
 
-  find() {
-    return this.productCategoryRepository.find();
+  async find() {
+    const items = await this.productCategoryRepository.find();
+    for (let i = 0; i < items.length; i++) {
+      let item = items[i];
+      if (item) {
+        item.children = await this.findChildren(item.id);
+      }
+    }
+    return items;
   }
 
   async findById(id: number) {
@@ -28,6 +35,15 @@ export class ProductCategoriesService {
     found.children = await this.productCategoryRepository.find({
       where: {
         parent_id: found.id,
+      },
+    });
+    return found;
+  }
+
+  async findChildren(id: number) {
+    const found = await this.productCategoryRepository.find({
+      where: {
+        parent_id: id,
       },
     });
     return found;
