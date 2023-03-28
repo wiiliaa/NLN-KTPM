@@ -7,4 +7,7 @@ export class CreateCategoryDto {
     description: string;
     @ApiProperty()
     parentId?: number;
+
+    @ApiProperty()
+    level: number;
 }

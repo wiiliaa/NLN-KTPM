@@ -52,7 +52,7 @@ export class ProductCategoriesService {
   }
 
   async create(createCategoryDto: CreateCategoryDto): Promise<ProductCategory> {
-    const { name, description, parentId } = createCategoryDto;
+    const { name, description, parentId, level } = createCategoryDto;
     const slug = slugifyVietnamese(name);
     const productcategory = new ProductCategory();
 
@@ -60,6 +60,7 @@ export class ProductCategoriesService {
     productcategory.slug = slug;
     productcategory.description = description;
     productcategory.parent_id = parentId;
+    productcategory.level = level;
 
     await productcategory.save();
 

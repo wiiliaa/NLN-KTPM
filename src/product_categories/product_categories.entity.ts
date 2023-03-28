@@ -24,6 +24,9 @@ export class ProductCategory extends BaseEntity {
   @Column()
   description: string;
 
+  @Column({ nullable: true, default: 0 })
+  level: number;
+
   @OneToMany(() => Product, (product) => product.productCategory)
   products: Product[];
 
