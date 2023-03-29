@@ -15,8 +15,7 @@ import { Payment } from 'src/payments/payments.entity';
 import { User } from 'src/auth/user.entity';
 import { Discount } from '@src/discounts/discounts.entity';
 import { PaymentOrder } from '@src/payment_orders/payment_orders.entity';
-import { Transport } from '@src/transports/transports.entity';
-import { Transportation } from '@src/transportation/transportation.entity';
+import { Status } from '@src/status/status.entity';
 
 @Entity()
 export class Order extends BaseEntity {
@@ -69,6 +68,13 @@ export class Order extends BaseEntity {
         cascade: true,
     })
     orderDetails: OrderDetail[];
+
+    @ManyToOne(() => Status, (status) => status.orders)
+    @JoinColumn({ name: 'status_id' })
+    status: Status;
+
+    @Column({ nullable: true })
+    status_id: number;
 
     @CreateDateColumn({
         type: 'timestamp',

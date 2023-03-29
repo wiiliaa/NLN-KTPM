@@ -1,6 +1,11 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiProperty,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { GetUser } from '@src/auth/get-user.decorator';
 import { User } from '@src/auth/user.entity';
 import { CommentsService } from './comments.service';
@@ -11,22 +16,36 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 export class CommentsController {
   constructor(private commentsService: CommentsService) { }
 
+  @ApiResponse({
+    status: 200,
+    description: 'The found record',
+  })
   @Get('/:id')
   async findOne(@Param('id') id: number) {
     return this.commentsService.findOne(id);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'The found record',
+  })
   @Get('/product/:productId')
   async findByProduct(@Param('productId') productId: number) {
     return this.commentsService.findByProduct(productId);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'The found record',
+  })
   @Post()
   @UseGuards(AuthGuard())
+  @ApiBearerAuth('access-token')
   async create(
-    @Body() createCommentDto: CreateCommentDto,
     @GetUser() user: User,
+    @Body() createCommentDto: CreateCommentDto,
   ) {
+    console.log(user);
     return this.commentsService.create(createCommentDto, user);
   }
 

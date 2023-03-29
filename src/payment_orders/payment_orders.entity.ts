@@ -29,12 +29,6 @@ export class PaymentOrder extends BaseEntity {
   @Column()
   pay_id: string;
 
-  @OneToMany(() => Status, (status) => status.paymentOrders)
-  status: Status;
-
-  @Column({ nullable: true })
-  status_id: number;
-
   @OneToOne(() => Order)
   @JoinColumn({ name: 'order_id' })
   order: Order;

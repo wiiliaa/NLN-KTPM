@@ -49,4 +49,11 @@ export class CreateOrderDto {
     description: 'user ID',
   })
   userId?: number;
+
+  @ApiProperty({
+    default: 1,
+    description: 'status ID',
+    example: 1,
+  })
+  statusId?: number;
 }

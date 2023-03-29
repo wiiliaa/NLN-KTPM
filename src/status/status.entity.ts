@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Comment } from '@src/comments/comments.entity';
+import { Order } from '@src/orders/order.entity';
 import { Payment } from '@src/payments/payments.entity';
 import { Product } from '@src/products/products.entity';
 import { User } from 'src/auth/user.entity';
@@ -13,6 +14,7 @@ import {
     PrimaryGeneratedColumn,
     OneToOne,
     OneToMany,
+    JoinColumn,
 } from 'typeorm';
 
 // Các table khác dùng khoá của status là đủ rồi, không cần phải liên kết ở table status
@@ -31,17 +33,15 @@ export class Status extends BaseEntity {
     @Column()
     target: string;
 
-    @OneToOne(() => User)
-    user: User;
+    @OneToMany(() => Order, (order) => order.status)
+    @JoinColumn({
+        name: 'id',
+        referencedColumnName: 'status_id',
+    })
+    orders: Order[];
 
-    @OneToMany(() => Comment, (comment) => comment.status)
-    comments: Comment[];
-
-    @OneToMany(() => PaymentOrder, (paymentorder) => paymentorder.status)
-    paymentOrders: PaymentOrder[];
-
-    @OneToMany(() => Product, (product) => product.status)
-    product: Product[];
+    // @OneToMany((type) => Comment, (comment) => comment.status)
+    // comments: Comment[];
 
     @CreateDateColumn({
         type: 'timestamp',

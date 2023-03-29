@@ -22,13 +22,12 @@ export class StatusService {
         }
         return found;
     }
-    async create(user: User, createStatusDto: CreateStatusDto) {
+    async create(createStatusDto: CreateStatusDto) {
         const { name, description, target } = createStatusDto;
         const status = new Status();
         status.name = name;
         status.description = description;
         status.target = target;
-        status.user = user;
         return await status.save();
     }
     async update(id: number, updateStatusDto: UpdateStatusDto) {

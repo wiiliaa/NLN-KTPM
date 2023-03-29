@@ -8,10 +8,7 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { GetUser } from '@src/auth/get-user.decorator';
-import { User } from '@src/auth/user.entity';
 import { CreatePaymentOrderDto } from '@src/payment_orders/dto/create-payment_order.dto';
 import { PaymentOrdersService } from '@src/payment_orders/payment_orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';

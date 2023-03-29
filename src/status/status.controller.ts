@@ -31,17 +31,13 @@ export class StatusController {
     }
 
     @Post()
-    @UseGuards(AuthGuard())
     @ApiResponse({
         status: 201,
         description: 'Create status',
         type: CreateStatusDto,
     })
-    async create(
-        @GetUser() user: User,
-        @Body() updateStatusDto: CreateStatusDto,
-    ) {
-        return this.statusService.create(user, updateStatusDto);
+    async create(@Body() updateStatusDto: CreateStatusDto) {
+        return this.statusService.create(updateStatusDto);
     }
 
     @Put('/:id')

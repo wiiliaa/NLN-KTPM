@@ -7,7 +7,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthCredentials } from './dto/auth-credentials.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -39,6 +39,7 @@ export class AuthController {
     return this.authService.signUp(createUserDto);
   }
 
+  @ApiBearerAuth('access-token')
   @Get('/user')
   @UseGuards(AuthGuard())
   async getUser(@GetUser() user: User) {

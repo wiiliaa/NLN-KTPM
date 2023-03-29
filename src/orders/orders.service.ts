@@ -47,6 +47,7 @@ export class OrdersService {
             discountId,
             orderDetails,
             userId,
+            statusId,
         } = createOrderDto;
         const order = new Order();
         order.orderDetails = [];
@@ -60,6 +61,7 @@ export class OrdersService {
         order.discount_id = discountId;
         order.payment_id = paymentId;
         order.user_id = userId;
+        order.status_id = statusId;
         await order.save();
         orderDetails.forEach(async (orderDetail) => {
             orderDetail.orderId = order.id;

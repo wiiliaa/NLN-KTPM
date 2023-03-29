@@ -80,8 +80,8 @@ export class Product extends BaseEntity {
   })
   productMetas: ProductMeta[];
 
-  @OneToOne(() => Status, (status) => status.product)
-  status: Status;
+  // @OneToOne(() => Status, (status) => status.product)
+  // status: Status;
 
   @ManyToOne(() => CartItems, (cartItem) => cartItem.product)
   cartItems: CartItems[];

@@ -1,11 +1,9 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateTransportDto } from './dto/create-transport.dto';
 import { TransportsService } from './transports.service';
 
 @ApiTags('transports')
-@UseGuards(AuthGuard())
 @Controller('transports')
 export class TransportsController {
   constructor(private readonly transportsService: TransportsService) { }

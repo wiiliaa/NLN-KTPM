@@ -24,19 +24,21 @@ export class Comment extends BaseEntity {
   @Column()
   rate: number;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, {
+    eager: true,
+  })
   @JoinColumn({ name: 'user_id' })
   user: User;
 
   @Column()
   user_id: number;
 
-  @OneToOne(() => Status)
-  @JoinColumn({ name: 'status_id' })
-  status: Status;
-
-  @Column({ default: 1 })
-  status_id: number;
+  // @OneToOne(() => Status)
+  // @JoinColumn({ name: 'status_id' })
+  // status: Status;
+  //
+  // @Column({ default: 1 })
+  // status_id: number;
 
   @ManyToOne(() => Product, (product) => product.comments)
   @JoinColumn({ name: 'product_id' })
