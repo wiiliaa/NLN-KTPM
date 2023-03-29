@@ -38,16 +38,8 @@ export class OrdersService {
     }
 
     async create(createOrderDto: CreateOrderDto) {
-        const {
-            note,
-            ordercode,
-            tax,
-            paymentId,
-            discountId,
-            orderDetails,
-            userId,
-            statusId,
-        } = createOrderDto;
+        const { note, tax, paymentId, discountId, orderDetails, userId, statusId } =
+            createOrderDto;
         const order = new Order();
         order.orderDetails = [];
         if (orderDetails.length == 0) {
@@ -55,7 +47,7 @@ export class OrdersService {
         }
 
         order.note = note;
-        order.ordercode = ordercode;
+        order.ordercode = this.randomOrderCode();
         order.tax = tax;
         order.discount_id = discountId;
         order.payment_id = paymentId;
@@ -102,6 +94,12 @@ export class OrdersService {
             totalAfter,
         };
     }
+
+    /// make function random number 1000 to 10000
+    randomOrderCode() {
+        return `OZK-${Math.floor(Math.random() * 10000) + 1000}`;
+    }
+
     async update(id: number, updateOrderDto: UpdateOrderDto) {
         const { note, ordercode } = updateOrderDto;
         let order = await this.findOne(id);

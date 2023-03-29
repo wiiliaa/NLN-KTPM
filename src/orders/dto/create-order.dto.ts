@@ -3,9 +3,6 @@ import { CreateOrderDetailDto } from '@src/order_details/dto/create-order_detail
 
 export class CreateOrderDto {
   @ApiProperty()
-  ordercode: string;
-
-  @ApiProperty()
   note: string;
 
   @ApiProperty()
