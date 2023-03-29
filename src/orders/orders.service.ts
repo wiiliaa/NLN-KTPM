@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { Order } from './order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { User } from '@src/auth/user.entity';
 import { OrderDetailsService } from '@src/order_details/order_details.service';
 import { PaymentOrdersService } from '@src/payment_orders/payment_orders.service';
 @Injectable()
