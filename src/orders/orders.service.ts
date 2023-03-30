@@ -14,8 +14,13 @@ export class OrdersService {
         private paymentOrderService: PaymentOrdersService,
     ) { }
 
-    find() {
-        return this.orderRepository.find();
+    async find() {
+        const orders = await this.orderRepository.find();
+        const result = [];
+        for (let i = 0; i < orders.length; i++) {
+            result[i] = this.responseOrderWithCal(orders[i]);
+        }
+        return result;
     }
     async findOne(id: number) {
         const found = await this.orderRepository
@@ -54,10 +59,13 @@ export class OrdersService {
         order.user_id = userId;
         order.status_id = statusId;
         await order.save();
-        orderDetails.forEach(async (orderDetail) => {
-            orderDetail.orderId = order.id;
-            await this.orderDetailService.create(orderDetail);
-        });
+        for (let i = 0; i < orderDetails.length; i++) {
+            orderDetails[i].orderId = order.id;
+            let newOrderDetail = await this.orderDetailService.create(
+                orderDetails[i],
+            );
+            order.orderDetails.push(newOrderDetail);
+        }
         let result = await this.findOne(order.id);
         return this.responseOrderWithCal(result);
     }
@@ -75,24 +83,33 @@ export class OrdersService {
     }
 
     calORderTotal(order: Order) {
-        let totalAll = 0;
-        if (!order.orderDetails)
-            return { totalAll, totalDiscount: 0, totalTax: 0, totalAfter: 0 };
-        order.orderDetails.forEach((orderDetail) => {
-            totalAll += orderDetail.qty * orderDetail.product.price;
-        });
-        let totalDiscount = 0;
-        if (order.discount?.id) {
-            totalDiscount = +(totalAll * (order.discount.percent / 100)).toFixed(2);
+        try {
+            let totalAll = 0;
+            if (!order.orderDetails)
+                return { totalAll, totalDiscount: 0, totalTax: 0, totalAfter: 0 };
+            order.orderDetails.forEach((orderDetail) => {
+                totalAll += orderDetail.qty * orderDetail.product.price;
+            });
+            let totalDiscount = 0;
+            if (order.discount?.id) {
+                totalDiscount = +(totalAll * (order.discount.percent / 100)).toFixed(2);
+            }
+            const totalTax = +(totalDiscount * (order.tax / 100)).toFixed(2);
+            const totalAfter = +(totalAll - totalDiscount + totalTax).toFixed(2);
+            return {
+                totalAll,
+                totalDiscount,
+                totalTax,
+                totalAfter,
+            };
+        } catch (err) {
+            return {
+                totalAll: 0,
+                totalDiscount: 0,
+                totalTax: 0,
+                totalAfter: 0,
+            };
         }
-        const totalTax = +(totalDiscount * (order.tax / 100)).toFixed(2);
-        const totalAfter = +(totalAll - totalDiscount + totalTax).toFixed(2);
-        return {
-            totalAll,
-            totalDiscount,
-            totalTax,
-            totalAfter,
-        };
     }
 
     /// make function random number 1000 to 10000

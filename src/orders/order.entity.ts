@@ -52,7 +52,9 @@ export class Order extends BaseEntity {
     @Column({ nullable: true })
     payment_id: number;
 
-    @OneToOne(() => PaymentOrder)
+    @OneToOne(() => PaymentOrder, {
+        eager: true,
+    })
     paymentOrder: PaymentOrder;
 
     @ManyToOne(() => User, (user) => user.orders, {
@@ -69,7 +71,9 @@ export class Order extends BaseEntity {
     })
     orderDetails: OrderDetail[];
 
-    @ManyToOne(() => Status, (status) => status.orders)
+    @ManyToOne(() => Status, (status) => status.orders, {
+        eager: true,
+    })
     @JoinColumn({ name: 'status_id' })
     status: Status;
 
