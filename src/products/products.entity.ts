@@ -59,6 +59,10 @@ export class Product extends BaseEntity {
   @OneToMany(() => Comment, (comment) => comment.product, {
     eager: true,
   })
+  @JoinColumn({
+    name: 'id',
+    referencedColumnName: 'product_id',
+  })
   comments: Comment[];
 
   @ManyToOne(

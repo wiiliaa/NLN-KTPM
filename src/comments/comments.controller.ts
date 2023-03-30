@@ -20,6 +20,15 @@ export class CommentsController {
     status: 200,
     description: 'The found record',
   })
+  @Get()
+  async find() {
+    return this.commentsService.find();
+  }
+
+  @ApiResponse({
+    status: 200,
+    description: 'The found record',
+  })
   @Get('/:id')
   async findOne(@Param('id') id: number) {
     return this.commentsService.findOne(id);

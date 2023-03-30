@@ -55,6 +55,10 @@ export class Order extends BaseEntity {
     @OneToOne(() => PaymentOrder, {
         eager: true,
     })
+    @JoinColumn({
+        name: 'order_id',
+        referencedColumnName: 'id',
+    })
     paymentOrder: PaymentOrder;
 
     @ManyToOne(() => User, (user) => user.orders, {

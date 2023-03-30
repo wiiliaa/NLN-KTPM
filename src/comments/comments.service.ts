@@ -11,6 +11,14 @@ export class CommentsService {
     @InjectRepository(Comment) private commentRepository: Repository<Comment>,
   ) { }
 
+  async find() {
+    return this.commentRepository
+      .createQueryBuilder('comment')
+      .leftJoinAndSelect('comment.user', 'user')
+      .leftJoinAndSelect('comment.product', 'product')
+      .getMany();
+  }
+
   async findOne(id: number): Promise<Comment> {
     let found = await this.commentRepository.findOne({ where: { id } });
 
