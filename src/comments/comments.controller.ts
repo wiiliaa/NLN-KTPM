@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBearerAuth,
@@ -10,6 +10,7 @@ import { GetUser } from '@src/auth/get-user.decorator';
 import { User } from '@src/auth/user.entity';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { UpdateCommentDto } from './dto/update-comment.dto';
 
 @ApiTags('Comment')
 @Controller('comments')
@@ -57,7 +58,10 @@ export class CommentsController {
     console.log(user);
     return this.commentsService.create(createCommentDto, user);
   }
-
+  @Put('/:id')
+  async update(@Param('id') id: number, @Body() updateCommentDto: UpdateCommentDto) {
+    return this.commentsService.update(id, updateCommentDto);
+  }
   /*
    * Router Comments
    *
