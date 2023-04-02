@@ -39,6 +39,11 @@ export class OrdersService {
 
     async remove(id: number) {
         const order = await this.findOne(id);
+        order.orderDetails.forEach(async (orderDetail) => {
+            await this.orderDetailService.delete(orderDetail.id);
+        });
+        await this.paymentOrderService.delete(order.paymentOrder.id);
+
         return await order.remove();
     }
 
