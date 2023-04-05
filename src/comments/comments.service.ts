@@ -11,7 +11,7 @@ export class CommentsService {
   constructor(
     @InjectRepository(Comment) private commentRepository: Repository<Comment>,
   ) { }
-
+    
   async find() {
     return this.commentRepository
       .createQueryBuilder('comment')
