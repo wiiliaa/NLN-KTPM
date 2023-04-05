@@ -17,6 +17,7 @@ import { RolesModule } from './roles/roles.module';
 import { StatusModule } from './status/status.module';
 import { TransportsModule } from './transports/transports.module';
 import { UsersModule } from './users/users.module';
+import { GhnModule } from './ghn/ghn.module';
 
 @Module({
   controllers: [AppController],
@@ -38,6 +39,7 @@ import { UsersModule } from './users/users.module';
     PaymentOrdersModule,
     OrdersModule,
     StatusModule,
+    GhnModule,
   ],
 })
 export class AppModule {}
