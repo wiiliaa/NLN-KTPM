@@ -140,13 +140,15 @@ export class ProductsService {
     return found;
   }
 
-  async findByCategory(category_id: number) {
+  async findByCategoryId(categoryId: number) {
     const found = await this.productRepository
       .createQueryBuilder('Product')
-      .where('Product.category_id = :category_id', { category_id: category_id })
+      .where('Product.category_id = :category_id', { category_id: categoryId })
       .getMany();
     if (!found) {
-      throw new InternalServerErrorException(`Category:${category_id} non-exist`);
+      throw new InternalServerErrorException(
+        `Category:${categoryId} non-exist`,
+      );
     }
     return found;
   }
