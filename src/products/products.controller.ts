@@ -40,10 +40,16 @@ export class ProductsController {
     const product = await this.productService.findBySlug(slug);
     return this.productService.parseToResult(product);
   }
+
   @Get('/category_id/:category_id')
+  @ApiResponse({
+    status: 200,
+    description: 'Get product by Category',
+  })
   async findCategory(@Param('category_id') category_id: number) {
-    return this.productService.findByCategory(category_id);
+    return this.productService.findByCategoryId(category_id);
   }
+
   @Get('/id/:id')
   async findOne(@Param('id') id: number) {
     const product = await this.productService.findById(id);

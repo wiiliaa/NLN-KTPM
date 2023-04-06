@@ -29,6 +29,7 @@ export class OrdersService {
             .leftJoinAndSelect('orderDetails.product', 'product')
             .leftJoinAndSelect('order.payment', 'payment')
             .leftJoinAndSelect('order.discount', 'discount')
+            .leftJoinAndSelect('order.status', 'status')
             .where('order.id = :id', { id })
             .getOne();
         try {
