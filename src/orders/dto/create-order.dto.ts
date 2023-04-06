@@ -53,4 +53,11 @@ export class CreateOrderDto {
     example: 1,
   })
   statusId?: number;
+
+  @ApiProperty({
+    default: 1,
+    description: 'cost from controller /ghn/check-cost',
+    example: '30000',
+  })
+  costShipping: number;
 }

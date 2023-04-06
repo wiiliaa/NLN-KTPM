@@ -51,8 +51,16 @@ export class OrdersService {
     }
 
     async create(createOrderDto: CreateOrderDto) {
-        const { note, tax, paymentId, discountId, orderDetails, userId, statusId } =
-            createOrderDto;
+        const {
+            note,
+            tax,
+            paymentId,
+            discountId,
+            orderDetails,
+            userId,
+            statusId,
+            costShipping,
+        } = createOrderDto;
         const order = new Order();
         order.orderDetails = [];
         if (orderDetails.length == 0) {
@@ -62,6 +70,7 @@ export class OrdersService {
         order.note = note;
         order.ordercode = this.randomOrderCode();
         order.tax = tax;
+        order.costShipping = costShipping;
         order.discount_id = discountId;
         order.payment_id = paymentId;
         order.user_id = userId;

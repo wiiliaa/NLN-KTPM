@@ -25,37 +25,57 @@ import { join } from 'path';
 export class ProductsController {
   constructor(private productService: ProductsService) { }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Get all products',
+  })
   @Get()
   async find(@Query() filterProductDto: FilterProductDto) {
     return this.productService.find(filterProductDto);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Get all products',
+  })
   @Get('/all')
   async getAll() {
     return this.productService.findAll();
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Get product by slug',
+  })
   @Get('/slug/:slug')
   async findSlug(@Param('slug') slug: string) {
     const product = await this.productService.findBySlug(slug);
     return this.productService.parseToResult(product);
   }
 
-  @Get('/category_id/:category_id')
   @ApiResponse({
     status: 200,
     description: 'Get product by Category',
   })
+  @Get('/category_id/:category_id')
   async findCategory(@Param('category_id') category_id: number) {
     return this.productService.findByCategoryId(category_id);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Get product by id',
+  })
   @Get('/id/:id')
   async findOne(@Param('id') id: number) {
     const product = await this.productService.findById(id);
     return this.productService.parseToResult(product);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Get product by name',
+  })
   @Get('/name/:name')
   async findByName(@Param('name') name: string) {
     return this.productService.findByName(name);
@@ -104,6 +124,10 @@ export class ProductsController {
     return this.productService.update(id, updateProductDto);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Delete product',
+  })
   @Delete('/:id')
   async delete(@Param('id') id: number) {
     return this.productService.delete(id);

@@ -34,6 +34,12 @@ export class Order extends BaseEntity {
     @Column({ type: 'float', nullable: true })
     total: number;
 
+    @Column({
+        type: 'float',
+        nullable: true,
+    })
+    costShipping: number;
+
     @ManyToOne(() => Discount, (discount) => discount.orders, {
         eager: true,
     })
