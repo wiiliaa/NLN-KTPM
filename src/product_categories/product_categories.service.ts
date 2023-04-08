@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductCategory } from './product_categories.entity';
 import { Repository } from 'typeorm';
@@ -29,6 +29,23 @@ export class ProductCategoriesService {
     const found = await this.productCategoryRepository.findOne({
       where: { id },
     });
+    if (found?.parent_id) {
+      found.parent = await this.findById(found.parent_id);
+    }
+    found.children = await this.productCategoryRepository.find({
+      where: {
+        parent_id: found.id,
+      },
+    });
+    return found;
+  }
+  async findBySlug(slug: string) {
+    const found = await this.productCategoryRepository.findOne({
+      where: { slug },
+    });
+    if (!found) {
+      throw new InternalServerErrorException(`Category:${slug} non-exist`);
+    }
     if (found?.parent_id) {
       found.parent = await this.findById(found.parent_id);
     }

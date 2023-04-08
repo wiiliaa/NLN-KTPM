@@ -34,6 +34,14 @@ export class ProductCategoriesController {
     return this.productCategoriesService.findById(id);
   }
 
+  @Get('/slug/:slug')
+  @ApiResponse({
+    status: 200,
+    description: 'Find category by slug',
+  })
+  findBySlug(@Param('slug') slug: string) {
+    return this.productCategoriesService.findBySlug(slug);
+  }
   @Put('/:id')
   async update(
     @Param('id') id: number,
